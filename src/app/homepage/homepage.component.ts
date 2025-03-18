@@ -7,7 +7,8 @@ import { CartesTitreTablesComponent } from '../cartes-titre-tables/cartes-titre-
   selector: 'app-homepage',
   imports: [CartesTitreTablesComponent],
   templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.css'
+  standalone: true,
+  styleUrl: './homepage.component.sass'
 })
 export class HomepageComponent implements OnInit{
   

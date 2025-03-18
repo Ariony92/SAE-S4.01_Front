@@ -1,0 +1,10 @@
+<footer>
+  @for (section of footerSections; track section.title) {
+    <ul class="footer-section">
+      <p class="footer-title">{{ section.title }}</p>
+      @for (link of section.links; track link) {
+        <li><a href="#">{{ link }}</a></li>
+      }
+    </ul>
+  }
+</footer>
