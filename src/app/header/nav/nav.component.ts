@@ -1,11 +1,40 @@
 import { Component } from '@angular/core';
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-nav',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.css'
+  styleUrl: './nav.component.sass'
 })
 export class NavComponent {
+  nav: Array<string> = ["Acceuil"];
+  pagePrincipale: string = "Home";
 
+  setActiveTab(tab: string): void {
+    this.pagePrincipale = tab;
+  }
+
+  getonglet(element: string): string {
+    if (element === this.pagePrincipale) {
+      return 'home-link';
+    }
+    return '';
+  }
+
+  tabactive(element: string): boolean {
+    return element === this.pagePrincipale;
+  }
+
+
+  getRoute(element: string): string {
+    switch (element) {
+      case "Accueil":
+        return "/home";
+      default:
+        return "/home"
+        //ajout d'autre route si besoin
+    }
+  }
 }

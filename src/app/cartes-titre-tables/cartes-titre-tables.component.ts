@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-cartes-titre-tables',
   imports: [],
   templateUrl: './cartes-titre-tables.component.html',
-  styleUrl: './cartes-titre-tables.component.css'
+  styleUrl: './cartes-titre-tables.component.sass'
 })
 export class CartesTitreTablesComponent {
 

@@ -1,1 +1,10 @@
-<p>nav works!</p>
+<ul id="menu">
+  @for (element of nav; track element) {
+    <li
+      [id]="getonglet(element)"
+      [class.active]="tabactive(element)"
+      (click)="setActiveTab(element)">
+      <a routerLink="{{ getRoute(element) }}">{{ element }}</a>
+    </li>
+  }
+</ul>
