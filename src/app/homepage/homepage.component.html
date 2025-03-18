@@ -1,1 +1,4 @@
-<p>homepage works!</p>
+<div *ngFor="let titre of titresTables | async">
+    <app-cartes-titre-tables [titre]="titre"></app-cartes-titre-tables>
+  </div>
+  
