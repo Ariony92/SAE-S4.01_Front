@@ -1,4 +1,3 @@
-<div *ngFor="let titre of titresTables | async">
-    <app-cartes-titre-tables [titre]="titre"></app-cartes-titre-tables>
-  </div>
-  
+<div class="div-container">
+  <app-cartes-titre-tables *ngFor="let titre of titresTables | async" [titre]="titre"></app-cartes-titre-tables>
+</div>
