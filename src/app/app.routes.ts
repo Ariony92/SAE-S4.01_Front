@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import {HomepageComponent} from './homepage/homepage.component';
+import { FooterComponent } from './footer/footer.component';
 
 export const routes: Routes = [
   {
@@ -15,4 +16,8 @@ export const routes: Routes = [
     path: '**',
     redirectTo: '404',
   },
+  {
+    path: 'table/:nomTable',
+    //component:
+  }
 ]

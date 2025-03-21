@@ -1,4 +1,5 @@
 import { Component, Input} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cartes-titre-tables',
@@ -8,5 +9,13 @@ import { Component, Input} from '@angular/core';
   styleUrl: './cartes-titre-tables.component.sass'
 })
 export class CartesTitreTablesComponent {
+  constructor(
+    private readonly router: Router
+  ) {}
+
   @Input({required: true}) titre!: string;
+
+  detail(){
+    this.router.navigate(['table', this.titre]); 
+  }
 }
