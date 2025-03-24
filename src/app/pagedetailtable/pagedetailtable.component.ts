@@ -24,35 +24,24 @@ export class PageDetailTableComponent implements OnInit {
     this.nomTable = this.route.snapshot.paramMap.get('nomTable') || ''
     if (!this.nomTable) {
       this.router.navigate(['/404'])
+      return
     }
 
     this.tableService.colonnesTable(this.nomTable).subscribe({
-      next: (tuple: nomColonne) => {
-        this.attributs = tuple.columns;
+      next: (reponse: nomColonne) => {
+        this.attributs = reponse.columns
       },
       error: () => {
-        this.messageErreur = "Erreur récuperation données"
+        this.messageErreur = "Erreur lors de la récupération des attributs"
       }
     })
-
     this.tableService.contenueTable(this.nomTable).subscribe({
-      next: (insertions: Insertions) => {
-        this.donnees = insertions.data;
-
-        if (this.attributs.length > 0) {
-          const cle = this.attributs[0]
-
-          this.donnees.sort((a, b) => {
-            const valeurA = a[cle]
-            const valeurB = b[cle]
-
-            const nombreA = parseInt(String(valeurA).match(/\d+/)?.[0] || '0', 10)
-            const nombreB = parseInt(String(valeurB).match(/\d+/)?.[0] || '0', 10)
-
-            return nombreA - nombreB
-          })
-        }
+      next: (reponse: Insertions) => {
+        this.donnees = reponse.data
       },
+      error: () => {
+        this.messageErreur = "Erreur lors de la récupération des données"
+      }
     })
   }
 
@@ -63,5 +52,7 @@ export class PageDetailTableComponent implements OnInit {
   SupprimerInsertion(id: TupleTable): void {
     //metthode dans le back qui supprime l'insertion avec id
   }
+
+
 
 }
