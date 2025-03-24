@@ -12,15 +12,27 @@ export class FooterNavComponent {
   footerSections: FooterSection[] = [
     {
       title: 'Contact',
-      links: ['Twitter', 'Email', 'Instagram']
+      links: [
+        { nom: 'Twitter', url: 'https://twitter.com' },
+        { nom: 'Email', url: 'mailto:contact@example.com' },
+        { nom: 'Instagram', url: 'https://instagram.com' }
+      ]
     },
     {
       title: 'À propos de nous',
-      links: ['Notre histoire', 'Nos exploits', 'Nos difficultées']
+      links: [
+        { nom: 'Notre histoire', url: '/notre-histoire' },
+        { nom: 'Nos exploits', url: '/nos-exploits' },
+        { nom: 'Nos difficultées', url: '/nos-difficultes' }
+      ]
     },
     {
       title: 'Aide',
-      links: ['Contact support', 'Instructions', 'A propos de nous']
+      links: [
+        { nom: 'Contact support', url: '/contact-support' },
+        { nom: 'Instructions', url: '/instructions' },
+        { nom: 'À propos de nous', url: '/a-propos' }
+      ]
     }
   ];
 }

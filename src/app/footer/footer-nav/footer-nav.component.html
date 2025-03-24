@@ -1,10 +1,10 @@
 <footer>
-  @for (section of footerSections; track section.title) {
-    <ul class="footer-section">
-      <p class="footer-title">{{ section.title }}</p>
-      @for (link of section.links; track link) {
-        <li><a href="#">{{ link }}</a></li>
-      }
-    </ul>
-  }
+    @for (section of footerSections; track section.title) {
+        <ul class="footer-section">
+            <p class="footer-title">{{ section.title }}</p>
+            @for (lien of section.links; track lien.nom) {
+                <li><a [href]="lien.url" target="_blank">{{ lien.nom }}</a></li>
+            }
+        </ul>
+    }
 </footer>
