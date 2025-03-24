@@ -1,0 +1,39 @@
+<main>
+<section id="messageErreur" [hidden]="messageErreur === ''">
+  <p id="texteErreur">{{ messageErreur }}</p>
+</section>
+
+<section id="contenuPage" [hidden]="messageErreur !== ''">
+  <h2 id="titreTable">Table : {{ nomTable }}</h2>
+
+  <section id="listeAttributs">
+    <h3>Attributs :</h3>
+    <ul>
+      <li *ngFor="let attribut of attributs">
+        {{ attribut }}
+        <button (click)="supprimerAttribut(attribut)">Supprimer</button>
+      </li>
+    </ul>
+  </section>
+
+  <section id="listeDonnees">
+    <h3>Données :</h3>
+    <table>
+      <thead>
+      <tr>
+        <th *ngFor="let attribut of attributs">{{ attribut }}</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let ligne of donnees">
+        <td *ngFor="let attribut of attributs">{{ ligne[attribut] }}</td>
+        <td>
+          <button (click)="SupprimerInsertion(ligne)">Supprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</section>
+</main>

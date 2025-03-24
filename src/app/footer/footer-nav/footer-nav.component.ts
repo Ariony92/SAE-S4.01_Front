@@ -20,7 +20,7 @@ export class FooterNavComponent {
     },
     {
       title: 'Aide',
-      links: ['Contact support', 'Instructions']
+      links: ['Contact support', 'Instructions', 'A propos de nous']
     }
   ];
 }
