@@ -31,11 +31,11 @@ export class TableService {
     return this.http.put<any>(`${this.API_URL}/tables/${nomTable}/${id}`, donneeMAJ);
   }
 
-  colonnesTable(nomTable: string): Observable<{ nom: string; type: string }[]> {
+  colonnesTable(nomTable: string): Observable<{ nom: string; types: string }[]> {
     return this.http.get<{ columns: [string, string][] }>(
       `${this.API_URL}/tables/${nomTable}/columns`
     ).pipe(
-      map(response => response.columns.map(col => ({ nom: col[0], type: col[1] })))
+      map(response => response.columns.map(col => ({ nom: col[0], types: col[1] })))
     );
   }
 

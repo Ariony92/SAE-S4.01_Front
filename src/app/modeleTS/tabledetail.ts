@@ -12,5 +12,5 @@ export interface nomColonne {
 
 export interface TableAttribut{
   nom: string;
-  type : string;
+  types : string;
 }

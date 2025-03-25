@@ -7,15 +7,17 @@ import { Insertions, TableAttribut, TupleTable } from '../modeleTS/tabledetail';
 @Component({
   selector: 'app-filtre',
   standalone: true,
-  imports: [FormsModule, PageDetailTableComponent],
+  imports: [FormsModule],
   templateUrl: './filtre.component.html',
   styleUrl: './filtre.component.scss'
 })
 export class FiltreComponent {
+
   
   @Input({ required: true }) nomTable!: string;
   @Input({ required: true }) colonne!: string;
-  @Input({ required: true }) type!: string;
+  @Input({ required: true }) types!: string;
+  
 
   
   attributs: TableAttribut[] = []
@@ -26,7 +28,7 @@ export class FiltreComponent {
   formualire() {
     this.showForm = !this.showForm;  // Toggle pour afficher ou cacher le formulaire
   }
-
+  
   onSubmit(form: NgForm){
     if (form.valid){
       this.tableService.recherche(this.nomTable, this.colonne, form.value).subscribe({
@@ -41,4 +43,5 @@ export class FiltreComponent {
       });
     }
   }
+    
 }

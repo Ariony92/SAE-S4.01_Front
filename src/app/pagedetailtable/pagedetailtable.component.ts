@@ -36,6 +36,7 @@ export class PageDetailTableComponent implements OnInit {
     if (!this.attributs || this.attributs.length === 0) {
       this.tableService.colonnesTable(this.nomTable).subscribe({
         next: (reponse: TableAttribut[]) => {
+          
           this.attributs = reponse; 
         },
         error: () => {

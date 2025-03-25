@@ -20,12 +20,8 @@
     <table>
       <thead>
       <tr>
-        <th *ngFor="let attribut of attributs">
-          <div class="th-content">
-            <span>{{ attribut.nom }}</span>
-            <app-filtre [nomTable]="nomTable" [colonne]="attribut.nom" [type]="attribut.type"></app-filtre>
-          </div>
-        </th>
+        <th *ngFor="let attribut of attributs">{{ attribut.nom }} <app-filtre [nomTable]="nomTable" [colonne]="attribut.nom" [types]="attribut.types"></app-filtre></th>
+        
         <th>Action</th>
       </tr>
       </thead>
