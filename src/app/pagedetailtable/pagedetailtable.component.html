@@ -9,8 +9,8 @@
     <h3>Attributs :</h3>
     <ul>
       <li *ngFor="let attribut of attributs">
-        {{ attribut.toUpperCase() }}
-        <button (click)="supprimerAttribut(attribut)">Supprimer</button>
+        {{ attribut.nom.toUpperCase() }}
+        <button (click)="supprimerAttribut(attribut.nom)">Supprimer</button>
       </li>
     </ul>
   </section>
@@ -20,13 +20,18 @@
     <table>
       <thead>
       <tr>
-        <th *ngFor="let attribut of attributs">{{ attribut.toUpperCase() }}</th>
+        <th *ngFor="let attribut of attributs">
+          <div class="th-content">
+            <span>{{ attribut.nom }}</span>
+            <app-filtre [nomTable]="nomTable" [colonne]="attribut.nom" [type]="attribut.type"></app-filtre>
+          </div>
+        </th>
         <th>Action</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let ligne of donnees">
-        <td *ngFor="let attribut of attributs">{{ ligne[attribut] }}</td>
+        <td *ngFor="let attribut of attributs">{{ ligne[attribut.nom] }}</td>
         <td>
           <button (click)="SupprimerInsertion(ligne)">Supprimer</button>
         </td>

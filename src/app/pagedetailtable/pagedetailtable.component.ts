@@ -1,48 +1,60 @@
-import { Component, OnInit } from '@angular/core'
-import {ActivatedRoute, Router} from '@angular/router'
-import { TableService } from '../services/tables.service'
-import { CommonModule } from '@angular/common'
-import { TupleTable, Insertions, nomColonne } from '../modeleTS/tabledetail'
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TableService } from '../services/tables.service';
+import { CommonModule } from '@angular/common';
+import { TupleTable, Insertions, nomColonne, TableAttribut } from '../modeleTS/tabledetail';
+import { FiltreComponent } from '../filtre/filtre.component';
 
 @Component({
   selector: 'app-pagedetailtable',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FiltreComponent],
   templateUrl: './pagedetailtable.component.html',
   styleUrl: './pagedetailtable.component.sass'
 })
 export class PageDetailTableComponent implements OnInit {
-  nomTable: string = ''
-  attributs: string[] = []
-  donnees: TupleTable[] = []
-  messageErreur: string = ""
+  nomTable: string = '';
+  messageErreur: string = '';
 
+  @Input() attributs!: TableAttribut[];
+  @Input() donnees!: TupleTable[];
 
-  constructor(private route: ActivatedRoute, private tableService: TableService,  private router: Router) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private tableService: TableService,  
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.nomTable = this.route.snapshot.paramMap.get('nomTable') || ''
+    this.nomTable = this.route.snapshot.paramMap.get('nomTable') || '';
     if (!this.nomTable) {
-      this.router.navigate(['/404'])
-      return
+      this.router.navigate(['/404']);
+      return;
     }
 
-    this.tableService.colonnesTable(this.nomTable).subscribe({
-      next: (reponse: nomColonne) => {
-        this.attributs = reponse.columns
-      },
-      error: () => {
-        this.messageErreur = "Erreur lors de la récupération des attributs"
-      }
-    })
-    this.tableService.contenueTable(this.nomTable).subscribe({
-      next: (reponse: Insertions) => {
-        this.donnees = reponse.data
-      },
-      error: () => {
-        this.messageErreur = "Erreur lors de la récupération des données"
-      }
-    })
+    
+    if (!this.attributs || this.attributs.length === 0) {
+      this.tableService.colonnesTable(this.nomTable).subscribe({
+        next: (reponse: TableAttribut[]) => {
+          this.attributs = reponse; 
+        },
+        error: () => {
+          this.messageErreur = "Erreur lors de la récupération des attributs";
+        }
+      });
+    }
+
+    
+    if (!this.donnees || this.donnees.length === 0) {
+      this.tableService.contenueTable(this.nomTable).subscribe({
+        next: (reponse: Insertions) => {
+          this.donnees = reponse.data;
+        },
+        error: () => {
+          this.messageErreur = "Erreur lors de la récupération des données";
+        }
+      });
+    }
   }
 
   supprimerAttribut(attribut: string): void {
@@ -50,9 +62,6 @@ export class PageDetailTableComponent implements OnInit {
   }
 
   SupprimerInsertion(id: TupleTable): void {
-    //metthode dans le back qui supprime l'insertion avec id
+    // méthode dans le back qui supprime l'insertion avec id
   }
-
-
-
 }
