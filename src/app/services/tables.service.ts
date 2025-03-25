@@ -25,17 +25,22 @@ export class TableService {
     return this.http.post<any>(`${this.API_URL}/tables/${nomTable}`, donnee);
   }
 
-  supprimerDansTable(nomTable: string, id: string): Observable<any> {
-    return this.http.delete<any>(`${this.API_URL}/tables/${nomTable}/${id}`);
+  supprimerDansTable(nomTable: string, cible: string, type: 'ligne' | 'colonne' = 'ligne'): Observable<any> {
+    let url = `${this.API_URL}/tables/${nomTable}`;
+
+    if (type === 'colonne') {
+      url += `/columns/${cible}`; // suppression d'un attribut
+    } else {
+      url += `/${cible}`; // suppression d'une ligne
+    }
+
+    return this.http.delete<any>(url);
   }
 
   mettreAJourDansTable(nomTable: string, id: string, donneeMAJ: any): Observable<any> {
     return this.http.put<any>(`${this.API_URL}/tables/${nomTable}/${id}`, donneeMAJ);
   }
 
-  colonnesTable(nomTable: string): Observable<{ columns: string[] }> {
-    return this.http.get<{ columns: string[] }>(
-      `${this.API_URL}/tables/${nomTable}/columns`
-    );
-  }
+
+
 }

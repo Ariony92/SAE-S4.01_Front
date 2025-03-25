@@ -10,3 +10,6 @@ export interface Insertions {
 export interface nomColonne {
   columns: string[];
 }
+
+
+

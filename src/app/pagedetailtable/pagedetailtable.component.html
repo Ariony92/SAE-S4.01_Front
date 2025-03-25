@@ -6,32 +6,32 @@
   <h2 id="titreTable">Table : {{ nomTable }}</h2>
 
   <section id="listeAttributs">
-    <h3>Attributs :</h3>
-    <ul>
-      <li *ngFor="let attribut of attributs">
+    <h3 id="titreAttributs">Attributs :</h3>
+    <ul id="listeUlAttributs">
+      <li *ngFor="let attribut of attributs" id="elementAttribut">
         {{ attribut.toUpperCase() }}
-        <button (click)="supprimerAttribut(attribut)">Supprimer</button>
+        <button id="bouttonSupprAttribut" (click)="supprimerAttribut(attribut)">Supprimer</button>
       </li>
     </ul>
   </section>
 
   <section id="listeDonnees">
-    <h3>Données :</h3>
-    <table>
-      <thead>
-      <tr>
-        <th *ngFor="let attribut of attributs">{{ attribut.toUpperCase() }}</th>
-        <th>Action</th>
+    <h3 id="titreDonnees">Données :</h3>
+    <table id="tableDonnees">
+      <thead id="tabDonnees">
+      <tr id="ligneEntete">
+        <th *ngFor="let attribut of attributs" id="enteteColonne">{{ attribut.toUpperCase() }}</th>
+        <th id="enteteAction">Action</th>
       </tr>
       </thead>
-      <tbody>
-      <tr *ngFor="let ligne of donnees">
-        <td *ngFor="let attribut of attributs">{{ ligne[attribut] }}</td>
-        <td>
-          <button (click)="SupprimerInsertion(ligne)">Supprimer</button>
+      <tr *ngFor="let ligne of donnees" id="ligneDonnee">
+        <td *ngFor="let attribut of attributs" id="celluleDonnee">{{ ligne[attribut] }}</td>
+        <td id="celluleAction">
+          <button id="buttonModif" (click)="modifierInsertion(ligne)">Modifier</button>
+          <button id="buttonSuppr" (click)="supprimerInsertion(ligne)">Supprimer</button>
         </td>
       </tr>
-      </tbody>
+
     </table>
   </section>
 </section>

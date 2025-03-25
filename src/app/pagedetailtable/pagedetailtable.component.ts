@@ -27,16 +27,9 @@ export class PageDetailTableComponent implements OnInit {
       return
     }
 
-    this.tableService.colonnesTable(this.nomTable).subscribe({
-      next: (reponse: nomColonne) => {
-        this.attributs = reponse.columns
-      },
-      error: () => {
-        this.messageErreur = "Erreur lors de la récupération des attributs"
-      }
-    })
     this.tableService.contenueTable(this.nomTable).subscribe({
       next: (reponse: Insertions) => {
+        this.attributs = Object.keys(reponse.data[0] || {})
         this.donnees = reponse.data
       },
       error: () => {
@@ -45,13 +38,64 @@ export class PageDetailTableComponent implements OnInit {
     })
   }
 
-  supprimerAttribut(attribut: string): void {
-    //supprimer attribut
+  supprimerInsertion(ligne: TupleTable): void {
+    if (!confirm("Supprimer ?")) return
+
+    let id = ligne[this.attributs[0]]
+    this.tableService.supprimerDansTable(this.nomTable, String(id)).subscribe({
+      next: () => {
+        this.tableService.contenueTable(this.nomTable).subscribe({
+          next: rep => this.donnees = rep.data,
+          error: () => this.messageErreur = "Erreur chargement des données"
+        })
+      },
+      error: () => {
+        this.messageErreur = "Erreur suppression"
+      }
+    })
   }
 
-  SupprimerInsertion(id: TupleTable): void {
-    //metthode dans le back qui supprime l'insertion avec id
+  modifierInsertion(ligne: TupleTable): void {
+    let id = ligne[this.attributs[0]]
+    let copie = { ...ligne }
+
+    for (let i = 0; i < this.attributs.length; i++) {
+      let att = this.attributs[i]
+      if (att !== this.attributs[0]) {
+        let val = prompt("Modifier " + att, String(copie[att]))
+        if (val !== null) copie[att] = val
+      }
+    }
+
+    this.tableService.mettreAJourDansTable(this.nomTable, String(id), copie).subscribe({
+      next: () => {
+        this.tableService.contenueTable(this.nomTable).subscribe({
+          next: rep => this.donnees = rep.data,
+          error: () => this.messageErreur = "Erreur rechargement"
+        })
+      },
+      error: () => {
+        this.messageErreur = "Erreur modification"
+      }
+    })
   }
+
+
+  supprimerAttribut(attribut: string) {
+    this.tableService.supprimerDansTable(this.nomTable, attribut).subscribe({
+      next: () => {
+        this.tableService.contenueTable(this.nomTable).subscribe(rep => {
+          this.attributs = Object.keys(rep.data[0] || {})
+          this.donnees = rep.data
+        })
+      },
+      error: () => {
+        this.messageErreur = "Erreur suppression attribut"
+      }
+    })
+  }
+
+
 
 
 
