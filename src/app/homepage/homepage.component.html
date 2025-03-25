@@ -1,6 +1,5 @@
 <section id="cartes">
-  <app-cartes-titre-tables
-    *ngFor="let titre of titresTables | async"
-    [titre]="titre"
-  ></app-cartes-titre-tables>
+  @for (titre of (titresTables | async); track titre) {
+    <app-cartes-titre-tables [titre]="titre"></app-cartes-titre-tables>
+  }
 </section>

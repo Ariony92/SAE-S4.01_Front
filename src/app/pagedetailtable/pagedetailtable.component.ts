@@ -1,102 +1,91 @@
 import { Component, OnInit } from '@angular/core'
 import {ActivatedRoute, Router} from '@angular/router'
 import { TableService } from '../services/tables.service'
-import { CommonModule } from '@angular/common'
-import { TupleTable, Insertions, nomColonne } from '../modeleTS/tabledetail'
+import { TupleTable} from '../modeleTS/tabledetail'
 
 @Component({
   selector: 'app-pagedetailtable',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './pagedetailtable.component.html',
   styleUrl: './pagedetailtable.component.sass'
 })
+
 export class PageDetailTableComponent implements OnInit {
-  nomTable: string = ''
-  attributs: string[] = []
-  donnees: TupleTable[] = []
-  messageErreur: string = ""
+  nomTable = '';
+  colonnes: string[] = [];
+  lignes: TupleTable[] = [];
+  clePrimaire = '';
+  messageErreur = '';
 
-
-  constructor(private route: ActivatedRoute, private tableService: TableService,  private router: Router) {}
+  constructor(private route: ActivatedRoute, private tableService: TableService, private router: Router) {}
 
   ngOnInit(): void {
-    this.nomTable = this.route.snapshot.paramMap.get('nomTable') || ''
+    this.nomTable = this.route.snapshot.paramMap.get('nomTable') || '';
     if (!this.nomTable) {
-      this.router.navigate(['/404'])
-      return
+      this.router.navigate(['/404']);
+      return;
     }
 
     this.tableService.contenueTable(this.nomTable).subscribe({
-      next: (reponse: Insertions) => {
-        this.attributs = Object.keys(reponse.data[0] || {})
-        this.donnees = reponse.data
+      next: (res) => {
+        this.lignes = res.data;
+        this.clePrimaire = res.primaryKey;
+        this.chargerColonnes();
       },
-      error: () => {
-        this.messageErreur = "Erreur lors de la récupération des données"
-      }
-    })
+      error: () => this.messageErreur = "Erreur chargement des données"
+    });
   }
 
-  supprimerInsertion(ligne: TupleTable): void {
-    if (!confirm("Supprimer ?")) return
+  chargerColonnes(): void {
+    this.tableService.colonnesTable(this.nomTable).subscribe({
+      next: (res) => this.colonnes = res.columns,
+      error: () => this.messageErreur = "Erreur chargement des colonnes"
+    });
+  }
 
-    let id = ligne[this.attributs[0]]
+  supprimerColonne(nom: string): void {
+    const confirmation = confirm(`Voulez-vous vraiment supprimer la colonne "${nom}" ?`);
+    if (!confirmation) return;
+    this.tableService.supprimerAttribut(this.nomTable, nom).subscribe({
+      next: () => this.chargerColonnes(),
+      error: () => this.messageErreur = "Erreur suppression colonne"
+    });
+  }
+
+
+  supprimerLigne(ligne: TupleTable): void {
+    if (!confirm("Supprimer ?")) return;
+
+    let id = ligne[this.clePrimaire];
     this.tableService.supprimerDansTable(this.nomTable, String(id)).subscribe({
-      next: () => {
-        this.tableService.contenueTable(this.nomTable).subscribe({
-          next: rep => this.donnees = rep.data,
-          error: () => this.messageErreur = "Erreur chargement des données"
-        })
-      },
-      error: () => {
-        this.messageErreur = "Erreur suppression"
-      }
-    })
+      next: () => this.ngOnInit(),
+      error: () => this.messageErreur = "Erreur suppression ligne"
+    });
   }
 
-  modifierInsertion(ligne: TupleTable): void {
-    let id = ligne[this.attributs[0]]
-    let copie = { ...ligne }
+  modifierLigne(ligne: TupleTable): void {
+    let id = ligne[this.clePrimaire];
+    let maj: any = {};
 
-    for (let i = 0; i < this.attributs.length; i++) {
-      let att = this.attributs[i]
-      if (att !== this.attributs[0]) {
-        let val = prompt("Modifier " + att, String(copie[att]))
-        if (val !== null) copie[att] = val
+    for (let i = 0; i < this.colonnes.length; i++) {
+      let col = this.colonnes[i];
+
+      if (col === this.clePrimaire) continue;
+
+      let valeurActuelle = ligne[col];
+      let nouvelleValeur = prompt("Modifier " + col, String(valeurActuelle));
+
+      if (nouvelleValeur !== null && nouvelleValeur !== String(valeurActuelle)) {
+        maj[col] = nouvelleValeur;
       }
     }
 
-    this.tableService.mettreAJourDansTable(this.nomTable, String(id), copie).subscribe({
-      next: () => {
-        this.tableService.contenueTable(this.nomTable).subscribe({
-          next: rep => this.donnees = rep.data,
-          error: () => this.messageErreur = "Erreur rechargement"
-        })
-      },
-      error: () => {
-        this.messageErreur = "Erreur modification"
-      }
-    })
+    if (Object.keys(maj).length === 0) return;
+
+    this.tableService.mettreAJourDansTable(this.nomTable, String(id), maj).subscribe({
+      next: () => this.ngOnInit(),
+      error: () => this.messageErreur = "Erreur modification ligne"
+    });
   }
-
-
-  supprimerAttribut(attribut: string) {
-    this.tableService.supprimerDansTable(this.nomTable, attribut).subscribe({
-      next: () => {
-        this.tableService.contenueTable(this.nomTable).subscribe(rep => {
-          this.attributs = Object.keys(rep.data[0] || {})
-          this.donnees = rep.data
-        })
-      },
-      error: () => {
-        this.messageErreur = "Erreur suppression attribut"
-      }
-    })
-  }
-
-
-
-
-
 }

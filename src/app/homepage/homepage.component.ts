@@ -2,11 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TableService } from '../services/tables.service';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { CartesTitreTablesComponent } from '../cartes-titre-tables/cartes-titre-tables.component';
-import {CommonModule} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
+
 
 @Component({
   selector: 'app-homepage',
-  imports: [CartesTitreTablesComponent, CommonModule],
+  imports: [CartesTitreTablesComponent, AsyncPipe],
   templateUrl: './homepage.component.html',
   standalone: true,
   styleUrl: './homepage.component.sass'
@@ -18,8 +19,8 @@ export class HomepageComponent implements OnInit{
 
   ngOnInit(): void {
     this.titresTables = this.tableService.nomTables().pipe(
-      map(response => response.tables) 
+      map(response => response.tables)
     );
   }
-  
+
 }

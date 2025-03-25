@@ -1,37 +1,48 @@
-<section id="messageErreur" [hidden]="messageErreur === ''">
-  <p id="texteErreur">{{ messageErreur }}</p>
-</section>
-
-<section id="contenuPage" [hidden]="messageErreur !== ''">
-  <h2 id="titreTable">Table : {{ nomTable }}</h2>
-
-  <section id="listeAttributs">
-    <h3 id="titreAttributs">Attributs :</h3>
-    <ul id="listeUlAttributs">
-      <li *ngFor="let attribut of attributs" id="elementAttribut">
-        {{ attribut.toUpperCase() }}
-        <button id="bouttonSupprAttribut" (click)="supprimerAttribut(attribut)">Supprimer</button>
-      </li>
-    </ul>
+@if (messageErreur !== '') {
+  <section id="messageErreur">
+    <p id="texteErreur">{{ messageErreur }}</p>
   </section>
+} @else {
+  <section id="contenuPage">
+    <h2 id="titreTable">Table : {{ nomTable }}</h2>
 
-  <section id="listeDonnees">
-    <h3 id="titreDonnees">Données :</h3>
-    <table id="tableDonnees">
-      <thead id="tabDonnees">
-      <tr id="ligneEntete">
-        <th *ngFor="let attribut of attributs" id="enteteColonne">{{ attribut.toUpperCase() }}</th>
-        <th id="enteteAction">Action</th>
-      </tr>
-      </thead>
-      <tr *ngFor="let ligne of donnees" id="ligneDonnee">
-        <td *ngFor="let attribut of attributs" id="celluleDonnee">{{ ligne[attribut] }}</td>
-        <td id="celluleAction">
-          <button id="buttonModif" (click)="modifierInsertion(ligne)">Modifier</button>
-          <button id="buttonSuppr" (click)="supprimerInsertion(ligne)">Supprimer</button>
-        </td>
-      </tr>
+    <section id="listeAttributs">
+      <h3 id="titreAttributs">Attributs :</h3>
+      <ul id="listeUlAttributs">
+        @for (colonne of colonnes; track colonne) {
+          <li id="elementAttribut">
+            {{ colonne.toUpperCase() }}
+            <button id="bouttonSupprAttribut" (click)="supprimerColonne(colonne)">Supprimer</button>
+          </li>
+        }
+      </ul>
+    </section>
 
-    </table>
+    <section id="listeDonnees">
+      <h3 id="titreDonnees">Données :</h3>
+      <table id="tableDonnees">
+        <thead id="tabDonnees">
+        <tr id="ligneEntete">
+          @for (colonne of colonnes; track colonne) {
+            <th id="enteteColonne">{{ colonne.toUpperCase() }}</th>
+          }
+          <th id="enteteAction">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (ligne of lignes; track ligne) {
+            <tr id="ligneDonnee">
+              @for (colonne of colonnes; track colonne) {
+                <td id="celluleDonnee">{{ ligne[colonne] }}</td>
+              }
+              <td id="celluleAction">
+                <button id="buttonModif" (click)="modifierLigne(ligne)">Modifier</button>
+                <button id="buttonSuppr" (click)="supprimerLigne(ligne)">Supprimer</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
   </section>
-</section>
+}
