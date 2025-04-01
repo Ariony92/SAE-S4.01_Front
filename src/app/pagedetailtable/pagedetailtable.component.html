@@ -20,7 +20,7 @@
     <table>
       <thead>
       <tr>
-        <th *ngFor="let attribut of attributs">{{ attribut.nom }} <app-filtre [nomTable]="nomTable" [colonne]="attribut.nom" [types]="attribut.types"></app-filtre></th>
+        <th *ngFor="let attribut of attributs">{{ attribut.nom }} <app-filtre [nomTable]="nomTable" [colonne]="attribut.nom" [types]="attribut.types" (envoieDonnees)="updateDonnees($event)"></app-filtre></th>
         
         <th>Action</th>
       </tr>

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TableService } from '../services/tables.service';
 import { PageDetailTableComponent } from '../pagedetailtable/pagedetailtable.component';
@@ -13,13 +13,11 @@ import { Insertions, TableAttribut, TupleTable } from '../modeleTS/tabledetail';
 })
 export class FiltreComponent {
 
-  
   @Input({ required: true }) nomTable!: string;
   @Input({ required: true }) colonne!: string;
   @Input({ required: true }) types!: string;
-  
+  @Output() envoieDonnees = new EventEmitter<TupleTable[]>();
 
-  
   attributs: TableAttribut[] = []
   donnees: TupleTable[] = []
   showForm = false; res = false;
@@ -28,20 +26,34 @@ export class FiltreComponent {
   formualire() {
     this.showForm = !this.showForm;  // Toggle pour afficher ou cacher le formulaire
   }
-  
+  /*
   onSubmit(form: NgForm){
     if (form.valid){
-      this.tableService.recherche(this.nomTable, this.colonne, form.value).subscribe({
+      console.log(form.value.recherche)
+      this.tableService.recherche(this.nomTable, this.colonne, form.value.recherche).subscribe({
             next: (reponse: Insertions) => {
-              this.donnees = reponse.data
+              this.envoieDonnees.emit(reponse.data)
             }
       })
-      this.tableService.colonnesTable(this.nomTable).subscribe({
-        next: (reponse: TableAttribut[]) => {
-          this.attributs = reponse; 
+     
+    }
+  }
+  */
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      console.log("Recherche effectuée pour:", form.value.recherche);
+      this.tableService.recherche(this.nomTable, this.colonne, form.value.recherche).subscribe({
+        next: (reponse: Insertions) => {
+          console.log("Réponse de la recherche:", reponse);
+          this.envoieDonnees.emit(reponse.entry);
+        },
+        error: (err) => {
+          console.error("Erreur lors de la recherche:", err);
         }
       });
     }
   }
+  
+  
     
 }

@@ -13,11 +13,10 @@ import { FiltreComponent } from '../filtre/filtre.component';
   styleUrl: './pagedetailtable.component.sass'
 })
 export class PageDetailTableComponent implements OnInit {
-  nomTable: string = '';
-  messageErreur: string = '';
-
-  @Input() attributs!: TableAttribut[];
-  @Input() donnees!: TupleTable[];
+  nomTable: string = ''
+  attributs: TableAttribut[] = []
+  donnees: TupleTable[] = []
+  messageErreur: string = ""
 
   constructor(
     private route: ActivatedRoute, 
@@ -56,6 +55,11 @@ export class PageDetailTableComponent implements OnInit {
         }
       });
     }
+  }
+
+  updateDonnees(data: TupleTable[]) {
+    //console.log("Événement reçu avec les nouvelles données:", data);
+    this.donnees = data;
   }
 
   supprimerAttribut(attribut: string): void {

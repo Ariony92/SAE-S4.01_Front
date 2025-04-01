@@ -4,6 +4,7 @@ export interface TupleTable {
 
 export interface Insertions {
   data: TupleTable[];
+  entry : TupleTable[];
 }
 
 export interface nomColonne {
