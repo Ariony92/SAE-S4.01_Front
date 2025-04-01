@@ -26,34 +26,17 @@ export class FiltreComponent {
   formualire() {
     this.showForm = !this.showForm;  // Toggle pour afficher ou cacher le formulaire
   }
-  /*
+
   onSubmit(form: NgForm){
     if (form.valid){
       console.log(form.value.recherche)
       this.tableService.recherche(this.nomTable, this.colonne, form.value.recherche).subscribe({
             next: (reponse: Insertions) => {
-              this.envoieDonnees.emit(reponse.data)
+              this.envoieDonnees.emit(reponse.entry)
             }
       })
      
     }
   }
-  */
-  onSubmit(form: NgForm) {
-    if (form.valid) {
-      console.log("Recherche effectuée pour:", form.value.recherche);
-      this.tableService.recherche(this.nomTable, this.colonne, form.value.recherche).subscribe({
-        next: (reponse: Insertions) => {
-          console.log("Réponse de la recherche:", reponse);
-          this.envoieDonnees.emit(reponse.entry);
-        },
-        error: (err) => {
-          console.error("Erreur lors de la recherche:", err);
-        }
-      });
-    }
-  }
   
-  
-    
 }
