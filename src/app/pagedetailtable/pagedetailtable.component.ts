@@ -12,11 +12,13 @@ import { FiltreComponent } from '../filtre/filtre.component';
   templateUrl: './pagedetailtable.component.html',
   styleUrl: './pagedetailtable.component.sass'
 })
+
 export class PageDetailTableComponent implements OnInit {
   nomTable: string = ''
   attributs: TableAttribut[] = []
   donnees: TupleTable[] = []
   messageErreur: string = ""
+  clePrimaire = '';
 
   constructor(
     private route: ActivatedRoute, 
@@ -33,7 +35,7 @@ export class PageDetailTableComponent implements OnInit {
 
     
     if (!this.attributs || this.attributs.length === 0) {
-      this.tableService.colonnesTable(this.nomTable).subscribe({
+      this.tableService.attributsTable(this.nomTable).subscribe({
         next: (reponse: TableAttribut[]) => {
           
           this.attributs = reponse; 
@@ -61,11 +63,48 @@ export class PageDetailTableComponent implements OnInit {
     this.donnees = data;
   }
 
-  supprimerAttribut(attribut: string): void {
-    //supprimer attribut
+  supprimerColonne(nom: string): void {
+    const confirmation = confirm(`Voulez-vous vraiment supprimer la colonne "${nom}" ?`);
+    if (!confirmation) return;
+    this.tableService.supprimerAttribut(this.nomTable, nom).subscribe({
+      next: () => this.chargerattributs(),
+      error: () => this.messageErreur = "Erreur suppression colonne"
+    });
   }
 
-  SupprimerInsertion(id: TupleTable): void {
-    // méthode dans le back qui supprime l'insertion avec id
+
+  supprimerLigne(ligne: TupleTable): void {
+    if (!confirm("Supprimer ?")) return;
+
+    let id = ligne[this.clePrimaire];
+    this.tableService.supprimerDansTable(this.nomTable, String(id)).subscribe({
+      next: () => this.ngOnInit(),
+      error: () => this.messageErreur = "Erreur suppression ligne"
+    });
+  }
+
+  modifierLigne(ligne: TupleTable): void {
+    let id = ligne[this.clePrimaire];
+    let maj: any = {};
+
+    for (let i = 0; i < this.attributs.length; i++) {
+      let col = this.attributs[i];
+
+      if (col.nom === this.clePrimaire) continue;
+
+      let valeurActuelle = ligne[col.nom];
+      let nouvelleValeur = prompt("Modifier " + col, String(valeurActuelle));
+
+      if (nouvelleValeur !== null && nouvelleValeur !== String(valeurActuelle)) {
+        maj[col.nom] = nouvelleValeur;
+      }
+    }
+
+    if (Object.keys(maj).length === 0) return;
+
+    this.tableService.mettreAJourDansTable(this.nomTable, String(id), maj).subscribe({
+      next: () => this.ngOnInit(),
+      error: () => this.messageErreur = "Erreur modification ligne"
+    });
   }
 }
