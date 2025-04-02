@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FooterSection} from '../../modeleTS/footerSection';
+import {FooterSection} from '../../../modeleTS/footerSection';
 
 @Component({
   selector: 'app-footer-nav',

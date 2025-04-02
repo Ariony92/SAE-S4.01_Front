@@ -3,7 +3,16 @@
 </button> 
 
 @if(showForm){
-    @if(types.startsWith('varchar')){
+    @if(types==='date'){
+        <form #scaleForm="ngForm" (ngSubmit)="onSubmit(scaleForm    )">
+            <label>min :</label>
+            <input type="date"  name="minValue" ngModel >
+            <label>max :</label>
+            <input type="date"  name="maxValue" ngModel >
+            <button type="submit" [disabled]="scaleForm.invalid"></button>
+        </form>
+    }
+    @else{
         <form #barreRecherheForm="ngForm" (ngSubmit)="onSubmit(barreRecherheForm)">
             <label for="search">Rechercher :</label>
             <input type="text" name="recherche"ngModel required/>
@@ -11,13 +20,5 @@
         </form>
     }
 
-    @if(types==='int'){
-        <form #scaleForm="ngForm" (ngSubmit)="onSubmit(scaleForm    )">
-            <label>min :</label>
-            <input type="number"  name="minValue" ngModel >
-            <label>max :</label>
-            <input type="number"  name="maxValue" ngModel >
-            <button type="submit" [disabled]="scaleForm.invalid"></button>
-        </form>
-    }
+    
 }

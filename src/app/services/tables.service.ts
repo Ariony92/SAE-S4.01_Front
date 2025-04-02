@@ -48,5 +48,8 @@ export class TableService {
     return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${recherche}`)
   }
   
+  rechercheDate(nomTable: string, columns: string, minDate: Date, maxDate: Date){
+    return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${minDate}/${maxDate}`)
+  }
 
 }
