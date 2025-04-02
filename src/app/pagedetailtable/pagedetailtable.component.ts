@@ -49,7 +49,6 @@ export class PageDetailTableComponent implements OnInit {
       this.tableService.contenueTable(this.nomTable).subscribe({
         next: (reponse: Insertions) => {
           this.donnees = reponse.data;
-          console.log("Init:", reponse.data);
         },
         error: () => {
           this.messageErreur = "Erreur lors de la récupération des données";
