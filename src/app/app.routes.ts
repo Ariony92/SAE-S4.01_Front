@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import {HomepageComponent} from './homepage/homepage.component';
-import {Page404Component} from './page404/page404.component';
-import {PageDetailTableComponent} from './pagedetailtable/pagedetailtable.component';
+import { HomepageComponent } from './pages/homepage/homepage.component';
+import { PageDetailTableComponent } from './pages/pagedetailtable/pagedetailtable.component';
+import { Page404Component } from './pages/page404/page404.component';
 
 export const routes: Routes = [
   {

@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TableService } from '../services/tables.service';
 import { CommonModule } from '@angular/common';
-import { TupleTable, Insertions, nomColonne, TableAttribut } from '../modeleTS/tabledetail';
-import { FiltreComponent } from '../filtre/filtre.component';
+import { TableService } from '../../services/tables.service';
+import { FiltreComponent } from '../../components/filtre/filtre.component';
+import { TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
+
 
 @Component({
   selector: 'app-pagedetailtable',
@@ -33,31 +34,25 @@ export class PageDetailTableComponent implements OnInit {
       return;
     }
 
-    
-    if (!this.attributs || this.attributs.length === 0) {
-      this.tableService.attributsTable(this.nomTable).subscribe({
-        next: (reponse: TableAttribut[]) => {
-          
-          this.attributs = reponse; 
-        },
-        error: () => {
-          this.messageErreur = "Erreur lors de la récupération des attributs";
-        }
-      });
-    }
-
-    
-    if (!this.donnees || this.donnees.length === 0) {
-      this.tableService.contenueTable(this.nomTable).subscribe({
-        next: (reponse: Insertions) => {
-          this.donnees = reponse.data;
-        },
-        error: () => {
-          this.messageErreur = "Erreur lors de la récupération des données";
-        }
-      });
-    }
+    this.tableService.contenueTable(this.nomTable).subscribe({
+      next: (res) => {
+        this.donnees = res.data;
+        this.clePrimaire = res.primaryKey;
+        this.chargerColonnes();
+      },
+      error: () => this.messageErreur = "Erreur chargement des données"
+    });
   }
+
+  chargerColonnes(): void {
+    this.tableService.colonnesTable(this.nomTable).subscribe({
+      next: (res) => this.attributs = res,
+      error: () => this.messageErreur = "Erreur chargement des colonnes"
+    });
+  }
+
+
+  
 
   updateDonnees(data: TupleTable[]) {
     this.donnees = data;
@@ -67,7 +62,7 @@ export class PageDetailTableComponent implements OnInit {
     const confirmation = confirm(`Voulez-vous vraiment supprimer la colonne "${nom}" ?`);
     if (!confirmation) return;
     this.tableService.supprimerAttribut(this.nomTable, nom).subscribe({
-      next: () => this.chargerattributs(),
+      next: () => this.chargerColonnes(),
       error: () => this.messageErreur = "Erreur suppression colonne"
     });
   }

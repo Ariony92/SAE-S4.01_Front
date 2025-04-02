@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from 'rxjs';
-import {Insertions, TupleTable} from '../modeleTS/tabledetail';
+import {Insertions, TableAttribut, TupleTable} from '../modeleTS/tabledetail';
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +19,13 @@ export class TableService {
     return this.http.get<{ data: TupleTable[], primaryKey: string }>(`${this.API_URL}/tables/${nomTable}`);
   }
 
-  colonnesTable(nomTable: string): Observable<{ columns: string[] }> {
-    return this.http.get<{ columns: string[] }>(`${this.API_URL}/tables/${nomTable}/columns`);
+  colonnesTable(nomTable: string): Observable<{ nom: string; types: string }[]> {
+    return this.http.get<{ columns: [string, string][] }>(
+      `${this.API_URL}/tables/${nomTable}/columns`
+    ).pipe(
+      map(response => response.columns.map(col => ({ nom: col[0], types: col[1] })))
+    );
   }
-
   supprimerDansTable(nomTable: string, id: string): Observable<any> {
     return this.http.delete(`${this.API_URL}/tables/${nomTable}/${id}`);
   }

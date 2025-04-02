@@ -1,8 +1,8 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { TableService } from '../services/tables.service';
-import { PageDetailTableComponent } from '../pagedetailtable/pagedetailtable.component';
-import { Insertions, TableAttribut, TupleTable } from '../modeleTS/tabledetail';
+import { Insertions, TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
+import { TableService } from '../../services/tables.service';
+
 
 @Component({
   selector: 'app-filtre',

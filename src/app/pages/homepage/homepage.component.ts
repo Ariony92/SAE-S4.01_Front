@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TableService } from '../services/tables.service';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { CartesTitreTablesComponent } from '../cartes-titre-tables/cartes-titre-tables.component';
 import {AsyncPipe} from '@angular/common';
+import { CartesTitreTablesComponent } from '../../components/cartes-titre-tables/cartes-titre-tables.component';
+import { TableService } from '../../services/tables.service';
 
 
 @Component({

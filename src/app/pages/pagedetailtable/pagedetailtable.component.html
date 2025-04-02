@@ -9,10 +9,10 @@
     <section id="listeAttributs">
       <h3 id="titreAttributs">Attributs :</h3>
       <ul id="listeUlAttributs">
-        @for (colonne of colonnes; track colonne) {
+        @for (attribut of attributs; track attribut) {
           <li id="elementAttribut">
-            {{ colonne.toUpperCase() }}
-            <button id="bouttonSupprAttribut" (click)="supprimerColonne(colonne)">Supprimer</button>
+            {{ attribut.nom.toUpperCase() }}
+            <button id="bouttonSupprAttribut" (click)="supprimerColonne(attribut.nom)">Supprimer</button>
           </li>
         }
       </ul>
@@ -23,22 +23,24 @@
       <table id="tableDonnees">
         <thead id="tabDonnees">
         <tr id="ligneEntete">
-          @for (colonne of colonnes; track colonne) {
-            <th id="enteteColonne">{{ colonne.nom.toUpperCase() }}</th>
+          @for (colonne of attributs; track colonne) {
+            <th id="enteteColonne">{{ colonne.nom.toUpperCase() }}
             <app-filtre [nomTable]="nomTable" [colonne]="colonne.nom" [types]="colonne.types" (envoieDonnees)="updateDonnees($event)"></app-filtre>
+            </th>
+            
           }
           <th id="enteteAction">Action</th>
         </tr>
         </thead>
         <tbody>
-          @for (ligne of lignes; track ligne) {
+          @for (donnee of donnees; track donnee) {
             <tr id="ligneDonnee">
-              @for (colonne of colonnes; track colonne) {
-                <td id="celluleDonnee">{{ ligne[colonne] }}</td>
+              @for (attribut of attributs; track attribut) {
+                <td id="celluleDonnee">{{ donnee[attribut.nom] }}</td>
               }
               <td id="celluleAction">
-                <button id="buttonModif" (click)="modifierLigne(ligne)">Modifier</button>
-                <button id="buttonSuppr" (click)="supprimerLigne(ligne)">Supprimer</button>
+                <button id="buttonModif" (click)="modifierLigne(donnee)">Modifier</button>
+                <button id="buttonSuppr" (click)="supprimerLigne(donnee)">Supprimer</button>
               </td>
             </tr>
           }
