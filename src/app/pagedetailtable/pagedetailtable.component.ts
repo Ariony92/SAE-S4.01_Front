@@ -59,7 +59,6 @@ export class PageDetailTableComponent implements OnInit {
   }
 
   updateDonnees(data: TupleTable[]) {
-    console.log("Événement reçu avec les nouvelles données:", data);
     this.donnees = data;
   }
 
