@@ -19,7 +19,10 @@
     </section>
 
     <section id="listeDonnees">
-      <h3 id="titreDonnees">Données :</h3>
+      <h3 id="titreDonnees">
+        Données :
+        <span id="infoTri">(les données sont triées par ordre croissant des nombres, et non par lettres)</span>
+      </h3>
       <table id="tableDonnees">
         <thead id="tabDonnees">
         <tr id="ligneEntete">
@@ -27,13 +30,13 @@
             <th id="enteteColonne">{{ colonne.nom.toUpperCase() }}
             <app-filtre [nomTable]="nomTable" [colonne]="colonne.nom" [types]="colonne.types" (envoieDonnees)="updateDonnees($event)"></app-filtre>
             </th>
-            
+
           }
           <th id="enteteAction">Action</th>
         </tr>
         </thead>
         <tbody>
-          @for (donnee of donnees; track donnee) {
+          @for (donnee of pagination; track donnee) {
             <tr id="ligneDonnee">
               @for (attribut of attributs; track attribut) {
                 <td id="celluleDonnee">{{ donnee[attribut.nom] }}</td>
@@ -46,6 +49,14 @@
           }
         </tbody>
       </table>
+      <section id="pagination">
+        <app-pagination
+          [totalElements]="donnees.length"
+          [elementsParPage]="elementsParPage"
+          [pageActuelle]="pageActuelle"
+          (changementPage)="setPage($event)">
+        </app-pagination>
+      </section>
     </section>
   </section>
 }

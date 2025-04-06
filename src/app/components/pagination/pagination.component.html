@@ -1,0 +1,13 @@
+<button (click)="pageSuivante(pageActuelle - 1)" [disabled]="pageActuelle === 1">
+  ←
+</button>
+
+@for (page of obtenirPages(); track page) {
+  <button (click)="pageSuivante(page)" [class.actif]="page === pageActuelle">
+    {{ page }}
+  </button>
+}
+
+<button (click)="pageSuivante(pageActuelle + 1)" [disabled]="pageActuelle === obtenirPages().length">
+  →
+</button>
