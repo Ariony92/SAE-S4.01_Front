@@ -20,12 +20,13 @@ export class TableService {
   }
 
   colonnesTable(nomTable: string): Observable<{ nom: string; types: string }[]> {
-    return this.http.get<{ columns: [string, string][] }>(
+    return this.http.get<{ columns: string[] }>(
       `${this.API_URL}/tables/${nomTable}/columns`
     ).pipe(
-      map(response => response.columns.map(col => ({ nom: col[0], types: col[1] })))
+      map(response => response.columns.map(nom => ({ nom, types: 'text' })))
     );
   }
+  
   supprimerDansTable(nomTable: string, id: string): Observable<any> {
     return this.http.delete(`${this.API_URL}/tables/${nomTable}/${id}`);
   }
@@ -49,4 +50,11 @@ export class TableService {
   }
   
 
+
+  getPrimaryKey(nomTable: string): Observable<{ primary_key: string }> {
+    return this.http.get<{ primary_key: string }>(`${this.API_URL}/tables/${nomTable}/primary-key`);
+  }
+  insererDansTable(nomTable: string, donnee: any): Observable<any> {
+    return this.http.post<any>(`${this.API_URL}/tables/${nomTable}`, donnee);
+  }
 }

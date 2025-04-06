@@ -1,0 +1,41 @@
+<h2>Formulaire d'insertion dynamique</h2>
+
+<label for="table">Choisir une table :</label>
+<select id="table" (change)="onTableSelect($event)">
+  <option value="">Sélectionner une table</option>
+  @for (t of tablesDisponibles; track t) {
+    <option>{{ t }}</option>
+  }
+</select>
+
+@if (form) {
+  <form [formGroup]="form" (submit)="onSubmit()"> 
+    @for (attribut of attributs; track $index) {
+      <div>
+        <label>{{ attribut | titlecase }}</label>
+
+        @if (selectOptions[attribut]) {
+          <select [formControlName]="attribut">
+            @for (opt of selectOptions[attribut]; track opt) {
+              <option [value]="getPrimaryKeyValue(opt)">
+                {{ getOptionLabel(attribut, opt) }}
+              </option>
+            }
+          </select>
+        } 
+        @else {
+          <input
+            [formControlName]="attribut"
+            [type]="attribut.toLowerCase().includes('date') ? 'date' : 'text'"
+          />
+        }
+
+        @if (form.get(attribut)?.invalid && form.get(attribut)?.touched) {
+          <p>Champ invalide : {{ attribut }}</p>
+        }
+      </div>
+    }
+
+    <button type="submit" [disabled]="form.invalid">Valider</button>
+  </form>
+}
