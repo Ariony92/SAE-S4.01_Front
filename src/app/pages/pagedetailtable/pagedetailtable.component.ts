@@ -4,12 +4,13 @@ import { CommonModule } from '@angular/common';
 import { TableService } from '../../services/tables.service';
 import { FiltreComponent } from '../../components/filtre/filtre.component';
 import { TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
+import {PaginationComponent} from '../../components/pagination/pagination.component';
 
 
 @Component({
   selector: 'app-pagedetailtable',
   standalone: true,
-  imports: [CommonModule, FiltreComponent],
+  imports: [CommonModule, FiltreComponent, PaginationComponent],
   templateUrl: './pagedetailtable.component.html',
   styleUrl: './pagedetailtable.component.sass'
 })
@@ -21,11 +22,12 @@ export class PageDetailTableComponent implements OnInit {
   messageErreur: string = ""
   clePrimaire = '';
 
-  constructor(
-    private route: ActivatedRoute, 
-    private tableService: TableService,  
-    private router: Router
-  ) {}
+  pagination: TupleTable[] = []
+  pageActuelle: number = 1
+  elementsParPage: number = 10
+
+
+  constructor(private route: ActivatedRoute, private tableService: TableService, private router: Router) {}
 
   ngOnInit(): void {
     this.nomTable = this.route.snapshot.paramMap.get('nomTable') || '';
@@ -38,6 +40,7 @@ export class PageDetailTableComponent implements OnInit {
       next: (res) => {
         this.donnees = res.data;
         this.clePrimaire = res.primaryKey;
+        this.setPage(1);
         this.chargerColonnes();
       },
       error: () => this.messageErreur = "Erreur chargement des données"
@@ -52,18 +55,23 @@ export class PageDetailTableComponent implements OnInit {
   }
 
 
-  
+
 
   updateDonnees(data: TupleTable[]) {
     this.donnees = data;
+    this.setPage(this.pageActuelle)
   }
 
   supprimerColonne(nom: string): void {
-    const confirmation = confirm(`Voulez-vous vraiment supprimer la colonne "${nom}" ?`);
-    if (!confirmation) return;
+    if (!confirm('Voulez-vous vraiment supprimer la colonne "' + nom + '" ?')) return;
+
     this.tableService.supprimerAttribut(this.nomTable, nom).subscribe({
-      next: () => this.chargerColonnes(),
-      error: () => this.messageErreur = "Erreur suppression colonne"
+      next: () => {
+        this.chargerColonnes();
+      },
+      error: () => {
+        this.messageErreur = 'Erreur suppression colonne';
+      }
     });
   }
 
@@ -80,7 +88,7 @@ export class PageDetailTableComponent implements OnInit {
 
   modifierLigne(ligne: TupleTable): void {
     let id = ligne[this.clePrimaire];
-    let maj: any = {};
+    let maj: TupleTable = {};
 
     for (let i = 0; i < this.attributs.length; i++) {
       let col = this.attributs[i];
@@ -102,4 +110,13 @@ export class PageDetailTableComponent implements OnInit {
       error: () => this.messageErreur = "Erreur modification ligne"
     });
   }
+
+
+  setPage(page: number): void {
+    this.pageActuelle = page;
+    let debut = (page - 1) * this.elementsParPage;
+    let fin = debut + this.elementsParPage;
+    this.pagination = this.donnees.slice(debut, fin);
+  }
+
 }
