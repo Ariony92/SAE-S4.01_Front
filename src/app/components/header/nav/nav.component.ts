@@ -9,7 +9,7 @@ import {RouterLink} from "@angular/router";
   styleUrl: './nav.component.sass'
 })
 export class NavComponent {
-  nav: Array<string> = ["Acceuil", "Import"];
+  nav: Array<string> = ["Accueil", "Import"];
   pagePrincipale: string = "Home";
 
   setActiveTab(tab: string): void {
