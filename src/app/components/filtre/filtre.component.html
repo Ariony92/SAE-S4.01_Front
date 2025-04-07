@@ -1,19 +1,19 @@
-<button (click)="formualire()">
+<button id="button" (click)="formualire()">
     <img width="10" height="10" src="https://img.icons8.com/ios/50/search--v1.png" alt="search"/>
 </button> 
 
 @if(showForm){
     @if(types==='date'){
-        <form #scaleForm="ngForm" (ngSubmit)="onSubmit(scaleForm    )">
-            <label>min :</label>
+        <form id="formDate" #scaleForm="ngForm" (ngSubmit)="onSubmit(scaleForm )">
+            <label>Date Min :</label>
             <input type="date"  name="minValue" ngModel >
-            <label>max :</label>
+            <label>Date Max :</label>
             <input type="date"  name="maxValue" ngModel >
             <button type="submit" [disabled]="scaleForm.invalid"></button>
         </form>
     }
     @else{
-        <form #barreRecherheForm="ngForm" (ngSubmit)="onSubmit(barreRecherheForm)">
+        <form id="formString"#barreRecherheForm="ngForm" (ngSubmit)="onSubmit(barreRecherheForm)">
             <label for="search">Rechercher :</label>
             <input type="text" name="recherche"ngModel required/>
             <button type="submit" [disabled]="barreRecherheForm.invalid"></button>
