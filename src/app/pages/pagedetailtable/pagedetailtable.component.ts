@@ -55,8 +55,6 @@ export class PageDetailTableComponent implements OnInit {
   }
 
 
-
-
   updateDonnees(data: TupleTable[]) {
     this.donnees = data;
     this.setPage(this.pageActuelle)
@@ -117,6 +115,10 @@ export class PageDetailTableComponent implements OnInit {
     let debut = (page - 1) * this.elementsParPage;
     let fin = debut + this.elementsParPage;
     this.pagination = this.donnees.slice(debut, fin);
+  }
+
+  resetPage(){
+    window.location.reload();
   }
 
 }
