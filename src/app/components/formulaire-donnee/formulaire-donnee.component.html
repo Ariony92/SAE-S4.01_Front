@@ -1,4 +1,9 @@
-<h2 id="titreInsertion">Insertion dans la table : {{ nomTable }}</h2>
+@if (update) {
+  <h2 id="titreInsertion">Mise à jour insertion table : {{ nomTable }}</h2>
+}
+@else {
+  <h2 id="titreInsertion">Insertion dans la table : {{ nomTable }}</h2>
+}
 
 @if (message !== '') {
   <p id="messageInsertion">{{ message }} </p>

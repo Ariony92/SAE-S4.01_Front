@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { PageDetailTableComponent } from './pages/pagedetailtable/pagedetailtable.component';
 import { Page404Component } from './pages/page404/page404.component';
-import { FormulaireDonneeComponent } from './pages/formulaire-donnee/formulaire-donnee.component';
+import { FormulaireDonneeComponent } from './components/formulaire-donnee/formulaire-donnee.component';
+
 
 export const routes: Routes = [
   {
