@@ -25,7 +25,7 @@ export class InsertPageComponent implements OnInit {
 
   @Input() donnees: TupleTable = {};
   @Output() annulerFormulaire = new EventEmitter<[]>();
-  
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly tableService: TableService,
@@ -41,34 +41,34 @@ export class InsertPageComponent implements OnInit {
       this.message = 'Nom de table non fourni';
       return;
     }
-  
+
     this.nomTable = param;
-  
+
     this.tableService.contenueTable(this.nomTable).subscribe({
       next: (res) => {
         this.clePrimaire = res.primaryKey;
       },
       error: () => this.message = "Problème au niveau de la récupération de la clé primaire"
     });
-  
+
     this.tableService.colonnesTable(this.nomTable).subscribe({
       next: (colonnes) => {
         this.attributs = colonnes;
         this.creerFormulaire();
-  
+
         for (let attribut of colonnes) {
           this.tableService.obtenirValeursEtrangeres(attribut.nom).subscribe((valeurs) => {
             if (valeurs.length > 0) {
               this.valeursSelect[attribut.nom] = valeurs;
             }
           });
-          
+
         }
       },
       error: () => this.message = 'Erreur chargement des attributs'
     });
   }
-  
+
 
   creerFormulaire(): void {
     const formGroup: { [cle: string]: FormControl<string> } = {};
@@ -81,7 +81,7 @@ export class InsertPageComponent implements OnInit {
       for (let attribut of this.attributs) {
         formGroup[attribut.nom] = new FormControl<string>('', { nonNullable: true, validators: [Validators.required] });
       }
-      
+
     }
 
     this.form = new FormGroup(formGroup);
@@ -91,14 +91,16 @@ export class InsertPageComponent implements OnInit {
     if (this.form.invalid) {
       this.message = "Formulaire invalide";
       return;
-    } 
+    }
     if (this.update){
-      this.changeService.mettreAJourDansTable(this.nomTable, String(this.clePrimaire), this.form.value).subscribe({
+      let idValeur = this.form.value[this.clePrimaire];
+      this.changeService.mettreAJourDansTable(this.nomTable, String(idValeur), this.form.value).subscribe({
         next:()=>{
-          this.annulerFormulaire.emit(); 
+          this.annulerFormulaire.emit();
         }
       });
     }
+
     else{
       this.changeService.insererDansTable(this.nomTable, this.form.value).subscribe({
         next: () => {
@@ -115,7 +117,7 @@ export class InsertPageComponent implements OnInit {
         }
       });
     }
-    
+
   }
 
 }

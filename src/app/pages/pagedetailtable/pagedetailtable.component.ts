@@ -5,12 +5,14 @@ import { TableService } from '../../services/tables.service';
 import { FiltreComponent } from '../../components/filtre/filtre.component';
 import { TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
 import {PaginationComponent} from '../../components/pagination/pagination.component';
+import {ChangeService} from '../../services/changes.service';
+import {InsertPageComponent} from '../insert-page/insert-page.component';
 
 
 @Component({
   selector: 'app-pagedetailtable',
   standalone: true,
-  imports: [CommonModule, FiltreComponent, PaginationComponent],
+  imports: [CommonModule, FiltreComponent, PaginationComponent, InsertPageComponent],
   templateUrl: './pagedetailtable.component.html',
   styleUrl: './pagedetailtable.component.sass'
 })
@@ -124,6 +126,7 @@ export class PageDetailTableComponent implements OnInit {
     this.formulaireModification = false;
     this.formualireInsert = false;
     this.ngOnInit();
+    this.resetPage();
   }
 
 }
