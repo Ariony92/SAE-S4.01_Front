@@ -26,7 +26,10 @@
         }
       </div>
     }
-
-    <button id="ValiderInsertion" type="submit" [disabled]="form.invalid">Ajouter</button>
+    <section class="buttonForm">
+      <button id="Annuler">Annuler</button>
+      <button id="Valider" type="submit" [disabled]="form.invalid">Valider</button>
+    </section>
+    
   </form>
 }

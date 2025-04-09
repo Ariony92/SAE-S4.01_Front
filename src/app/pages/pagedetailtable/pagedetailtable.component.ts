@@ -5,12 +5,14 @@ import { TableService } from '../../services/tables.service';
 import { FiltreComponent } from '../../components/filtre/filtre.component';
 import { TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
 import {PaginationComponent} from '../../components/pagination/pagination.component';
+import { ChangeService } from '../../services/changes.service';
+import { InsertPageComponent } from '../insert-page/insert-page.component';
 
 
 @Component({
   selector: 'app-pagedetailtable',
   standalone: true,
-  imports: [CommonModule, FiltreComponent, PaginationComponent],
+  imports: [CommonModule, FiltreComponent, PaginationComponent, InsertPageComponent],
   templateUrl: './pagedetailtable.component.html',
   styleUrl: './pagedetailtable.component.sass'
 })
@@ -75,28 +77,11 @@ export class PageDetailTableComponent implements OnInit {
 
   modifierLigne(donne: TupleTable): void {
     this.formulaireModification = true;
+    this.formualireInsert = false;
     this.donneModifier = donne
   }
 
-  modifierAttribut(nomActuel: string): void {
-    let nouveauNom = prompt("Nouveau nom pour l'attribut : ", nomActuel);
-
-    if (!nouveauNom || nouveauNom === nomActuel) return;
-
-    this.changeService.modifierAttribut(this.nomTable, nomActuel, nouveauNom).subscribe({
-      next: () => {
-        if (this.clePrimaire === nomActuel) {
-          this.clePrimaire = nouveauNom;
-        }
-        this.chargerColonnes();
-        this.ngOnInit();
-      },
-      error: () => this.messageErreur = "Erreur modification de l'attribut"
-    });
-  }
-
-
-
+  
   setPage(page: number): void {
     this.pageActuelle = page;
     let debut = (page - 1) * this.elementsParPage;
@@ -116,8 +101,9 @@ export class PageDetailTableComponent implements OnInit {
     });
   }
 
-  allerVersInsertion(): void {
+  formualireInsertion(): void {
     this.formualireInsert = true;
+    this.formulaireModification = false;
   }
 
   removeFormualire(){

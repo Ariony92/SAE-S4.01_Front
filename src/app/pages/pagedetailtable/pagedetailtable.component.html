@@ -11,8 +11,7 @@
       <ul id="listeUlAttributs">
         @for (attribut of attributs; track attribut) {
           <li id="elementAttribut">
-            {{ attribut.nom.toUpperCase() }}
-            <button id="bouttonModifAttribut" (click)="modifierAttribut(attribut.nom)">Modifier</button>
+            {{ attribut.nom.toUpperCase()}}
           </li>
         }
       </ul>
@@ -51,17 +50,11 @@
           }
         </tbody>
       </table>
-      @if (formulaireModification) {
-        <app-insert-page [donnees]=donneModifier (annulerFormulaire)=removeFormualire() ></app-insert-page>
-      }
-
+      
       <section>
-        <button id="buttonInsertion" (click)="allerVersInsertion()">Insérer des données</button>
+        <button id="buttonInsertion" (click)="formualireInsertion()">Insérer des données</button>
       </section>
-      @if (formualireInsert) {
-        <app-insert-page (annulerFormulaire)=removeFormualire()></app-insert-page>
-      }
-
+      
       <section id="pagination">
         <app-pagination
           [totalElements]="donnees.length"
@@ -71,5 +64,11 @@
         </app-pagination>
       </section>
     </section>
+    @if (formualireInsert) {
+      <app-insert-page (annulerFormulaire)=removeFormualire()></app-insert-page>
+    }
+    @if (formulaireModification) {
+      <app-insert-page [donnees]=donneModifier (annulerFormulaire)=removeFormualire() ></app-insert-page>
+    }
   </section>
 }
