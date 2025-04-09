@@ -1,0 +1,18 @@
+<h2>Importer des données</h2>
+
+<p> Seul les insertions sont accéptées </p>
+
+<form (ngSubmit)="envoyer()">
+  <textarea
+    [(ngModel)]="script"
+    name="sqlScript"
+    rows="25"
+    cols="200"
+    placeholder="INSERT INTO ..."
+    required
+  ></textarea>
+  <br />
+  <button type="submit">Valider</button>
+</form>
+
+<p class="msg">{{ message }}</p>
