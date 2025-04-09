@@ -51,6 +51,11 @@
           }
         </tbody>
       </table>
+
+      <section>
+        <button id="buttonInsertion" (click)="allerVersInsertion()">Insérer des données</button>
+      </section>
+
       <section id="pagination">
         <app-pagination
           [totalElements]="donnees.length"

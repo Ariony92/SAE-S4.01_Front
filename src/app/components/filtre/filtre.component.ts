@@ -30,26 +30,26 @@ export class FiltreComponent {
   onSubmit(form: NgForm){
     if (form.valid){
       if (form.value.minValue || form.value.maxValue){
-        if(form.value.minValue >form.value.maxValue){
+        if (form.value.minValue > form.value.maxValue){
           // afficher une erreur
         }
-        else{
+        else {
           this.tableService.rechercheDate(this.nomTable, this.colonne, form.value.minValue, form.value.maxValue).subscribe({
             next: (reponse: Insertions) => {
-              this.envoieDonnees.emit(reponse.data)
+              this.envoieDonnees.emit(reponse.entry);
             }
           })
         }
       }
-      else{
+      else {
         this.tableService.recherche(this.nomTable, this.colonne, form.value.recherche).subscribe({
           next: (reponse: Insertions) => {
-            this.envoieDonnees.emit(reponse.data)
+            this.envoieDonnees.emit(reponse.entry);
           }
         })
       }
-      
     }
   }
+  
   
 }

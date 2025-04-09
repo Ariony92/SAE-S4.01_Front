@@ -26,23 +26,6 @@ export class TableService {
       map(response => response.columns.map(col => ({ nom: col[0], types: col[1] })))
     );
   }
-  supprimerDansTable(nomTable: string, id: string): Observable<any> {
-    return this.http.delete(`${this.API_URL}/tables/${nomTable}/${id}`);
-  }
-
-  mettreAJourDansTable(nomTable: string, id: string, donneeMAJ: any): Observable<any> {
-    return this.http.put(`${this.API_URL}/tables/${nomTable}/${id}`, donneeMAJ);
-  }
-
-  supprimerAttribut(nomTable: string, attribut: string): Observable<any> {
-    return this.http.delete(`${this.API_URL}/tables/${nomTable}/columns/${attribut}`);
-  }
-
-  modifierAttribut(nomTable: string, ancienNom: string, nouveauNom: string): Observable<any> {
-    return this.http.put(`${this.API_URL}/tables/${nomTable}/columns/${ancienNom}`, {
-      nv_attribut_nom: nouveauNom
-    });
-  }
 
   recherche(nomTable: string, columns: string, recherche:string): Observable<Insertions> {
     return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${recherche}`)
@@ -52,4 +35,7 @@ export class TableService {
     return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${minDate}/${maxDate}`)
   }
 
+  obtenirValeursEtrangeres(colonne: string): Observable<{ id: string; label: string }[]> {
+    return this.http.get<{ id: string; label: string }[]>(`${this.API_URL}/tables/foreign_values/${colonne}`);
+  }
 }

@@ -5,7 +5,7 @@ import { TableService } from '../../services/tables.service';
 import { FiltreComponent } from '../../components/filtre/filtre.component';
 import { TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
 import {PaginationComponent} from '../../components/pagination/pagination.component';
-
+import { ChangeService } from '../../services/changes.service';
 
 @Component({
   selector: 'app-pagedetailtable',
@@ -27,7 +27,7 @@ export class PageDetailTableComponent implements OnInit {
   elementsParPage: number = 10
 
 
-  constructor(private route: ActivatedRoute, private tableService: TableService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private tableService: TableService, private changeService: ChangeService, private router: Router) {}
 
   ngOnInit(): void {
     this.nomTable = this.route.snapshot.paramMap.get('nomTable') || '';
@@ -63,7 +63,7 @@ export class PageDetailTableComponent implements OnInit {
   supprimerColonne(nom: string): void {
     if (!confirm('Voulez-vous vraiment supprimer la colonne "' + nom + '" ?')) return;
 
-    this.tableService.supprimerAttribut(this.nomTable, nom).subscribe({
+    this.changeService.supprimerAttribut(this.nomTable, nom).subscribe({
       next: () => {
         this.chargerColonnes();
       },
@@ -78,7 +78,7 @@ export class PageDetailTableComponent implements OnInit {
     if (!confirm("Supprimer ?")) return;
 
     let id = ligne[this.clePrimaire];
-    this.tableService.supprimerDansTable(this.nomTable, String(id)).subscribe({
+    this.changeService.supprimerDansTable(this.nomTable, String(id)).subscribe({
       next: () => this.ngOnInit(),
       error: () => this.messageErreur = "Erreur suppression ligne"
     });
@@ -103,7 +103,7 @@ export class PageDetailTableComponent implements OnInit {
 
     if (Object.keys(maj).length === 0) return;
 
-    this.tableService.mettreAJourDansTable(this.nomTable, String(id), maj).subscribe({
+    this.changeService.mettreAJourDansTable(this.nomTable, String(id), maj).subscribe({
       next: () => this.ngOnInit(),
       error: () => this.messageErreur = "Erreur modification ligne"
     });
@@ -121,4 +121,8 @@ export class PageDetailTableComponent implements OnInit {
     window.location.reload();
   }
 
+  allerVersInsertion(): void {
+    this.router.navigate(['/insert', this.nomTable]);
+  }
+  
 }
