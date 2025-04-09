@@ -76,10 +76,15 @@ export class PageDetailTableComponent implements OnInit {
   }
 
   modifierLigne(donne: TupleTable): void {
-    this.formulaireModification = true;
-    this.formualireInsert = false;
-    this.donneModifier = donne
+    this.formulaireModification = false; 
+    this.formualireInsert = false; 
+    
+    setTimeout(() => { //CHAT GPT: lors que je cliquer une deuxième fois sur modifier sur une autre ligne les donnees ne se metter pas à jour
+      this.donneModifier = donne;       
+      this.formulaireModification = true; 
+    }, 0); 
   }
+  
 
   modifierAttribut(nomActuel: string): void {
     let nouveauNom = prompt("Nouveau nom pour l'attribut : ", nomActuel);

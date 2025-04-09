@@ -74,7 +74,28 @@ export class FormulaireDonneeComponent implements OnInit {
     const formGroup: { [cle: string]: FormControl<string> } = {};
     if(this.update){
       for (let attribut of this.attributs) {
-        formGroup[attribut.nom] = new FormControl<string>(String(this.donnees[attribut.nom]), { nonNullable: true, validators: [Validators.required] });
+       
+        let donneEnString = String(this.donnees[attribut.nom]);
+        
+        if (attribut.types === 'date' || attribut.types === 'timestamp' ){
+          
+          const rawValue = this.donnees[attribut.nom];
+          const date = new Date(rawValue);
+          
+          if (!isNaN(date.getTime())) {
+            if(attribut.types === 'date'){
+              donneEnString = date.toISOString().split('T')[0];
+            }
+            else{
+              donneEnString = date.toISOString().split('T')[0] + ' ' +  date.toISOString().split('T')[1].slice(0, 5);
+            }
+ 
+          }
+        }
+        
+
+        
+        formGroup[attribut.nom] = new FormControl<string>(donneEnString, { nonNullable: true, validators: [Validators.required] });
       }
     }
     else{
