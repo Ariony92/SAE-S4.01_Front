@@ -9,7 +9,7 @@ import { TableService } from '../../services/tables.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './filtre.component.html',
-  styleUrl: './filtre.component.scss'
+  styleUrl: './filtre.component.sass'
 })
 export class FiltreComponent {
 
