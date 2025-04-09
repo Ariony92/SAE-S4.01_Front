@@ -30,7 +30,7 @@ export class TableService {
   recherche(nomTable: string, columns: string, recherche:string): Observable<Insertions> {
     return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${recherche}`)
   }
-  
+
   rechercheDate(nomTable: string, columns: string, minDate: Date, maxDate: Date){
     return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${minDate}/${maxDate}`)
   }

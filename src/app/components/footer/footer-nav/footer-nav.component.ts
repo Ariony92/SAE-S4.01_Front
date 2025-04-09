@@ -13,8 +13,8 @@ export class FooterNavComponent {
     {
       title: 'Contact',
       links: [
-        { nom: 'Twitter', url: 'https://twitter.com' },
-        { nom: 'Email', url: 'mailto:contact@example.com' },
+        { nom: 'Twitter', url: 'https://x.com/elonmuskADO/status/1906524803122495905' },
+        { nom: 'Email', url: 'https://mail.google.com' },
         { nom: 'Instagram', url: 'https://instagram.com' }
       ]
     },

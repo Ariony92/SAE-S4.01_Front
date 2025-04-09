@@ -12,19 +12,19 @@
         @for (attribut of attributs; track attribut) {
           <li id="elementAttribut">
             {{ attribut.nom.toUpperCase() }}
-            <button id="bouttonSupprAttribut" (click)="supprimerColonne(attribut.nom)">Supprimer</button>
+            <button id="bouttonModifAttribut" (click)="modifierAttribut(attribut.nom)">Modifier</button>
           </li>
         }
       </ul>
     </section>
 
     <section id="listeDonnees">
-      <h3 id="titreDonnees">Données : 
+      <h3 id="titreDonnees">Données :
         <button id="button-reset" (click)="resetPage()">
           <img width="10" height="10" src="https://img.icons8.com/?size=100&id=86242&format=png&color=000000" alt="reset"/>
-        </button> 
+        </button>
       </h3>
-      
+
       <table id="tableDonnees">
         <thead id="tabDonnees">
         <tr id="ligneEntete">
