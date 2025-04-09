@@ -21,16 +21,19 @@ export class ImportDonneesComponent {
 
     if (!contenu) {
       this.message = 'Le script ne peut pas être vide.';
+      setTimeout(() => { this.message = ''; }, 2000);
       return;
     }
 
     if (contenu.toLocaleLowerCase().startsWith('--')) {
       this.message = 'Enlevez vos commentaires du script et laissez les insertions uniquements';
+      setTimeout(() => { this.message = ''; }, 2000);
       return;
     }
 
     if (!contenu.toLowerCase().startsWith('insert')) {
-      this.message = 'Seuls les scripts INSERT sont autorisés.';
+      this.message = 'Seuls les INSERT sont autorisés.';
+      setTimeout(() => { this.message = ''; }, 2000);
       return;
     }
 
@@ -38,10 +41,14 @@ export class ImportDonneesComponent {
       next: (resultat) => {
         this.message = resultat.message;
         this.script = '';
+        setTimeout(() => { this.message = ''; }, 2000);
       },
+
       error: (erreur) => {
         this.message = (erreur.error?.erreur || 'Erreur lors de l’importation.');
+        setTimeout(() => { this.message = ''; }, 2000);
       }
     });
+    
   }
 }
