@@ -51,10 +51,16 @@
           }
         </tbody>
       </table>
+      @if (formulaireModification) {
+        <app-insert-page [donnees]=donneModifier (annulerFormulaire)=removeFormualire() ></app-insert-page>
+      }
 
       <section>
         <button id="buttonInsertion" (click)="allerVersInsertion()">Insérer des données</button>
       </section>
+      @if (formualireInsert) {
+        <app-insert-page (annulerFormulaire)=removeFormualire()></app-insert-page>
+      }
 
       <section id="pagination">
         <app-pagination

@@ -6,11 +6,13 @@ import { FiltreComponent } from '../../components/filtre/filtre.component';
 import { TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
 import {PaginationComponent} from '../../components/pagination/pagination.component';
 import { ChangeService } from '../../services/changes.service';
+import { InsertPageComponent } from '../insert-page/insert-page.component';
+import { CartesTitreTablesComponent } from "../../components/cartes-titre-tables/cartes-titre-tables.component";
 
 @Component({
   selector: 'app-pagedetailtable',
   standalone: true,
-  imports: [CommonModule, FiltreComponent, PaginationComponent],
+  imports: [CommonModule, FiltreComponent, PaginationComponent, InsertPageComponent],
   templateUrl: './pagedetailtable.component.html',
   styleUrl: './pagedetailtable.component.sass'
 })
@@ -21,7 +23,9 @@ export class PageDetailTableComponent implements OnInit {
   donnees: TupleTable[] = []
   messageErreur: string = ""
   clePrimaire = '';
-
+  formulaireModification = false;
+  formualireInsert = false;
+  donneModifier: TupleTable = {};
   pagination: TupleTable[] = []
   pageActuelle: number = 1
   elementsParPage: number = 10
@@ -84,29 +88,9 @@ export class PageDetailTableComponent implements OnInit {
     });
   }
 
-  modifierLigne(ligne: TupleTable): void {
-    let id = ligne[this.clePrimaire];
-    let maj: TupleTable = {};
-
-    for (let i = 0; i < this.attributs.length; i++) {
-      let col = this.attributs[i];
-
-      if (col.nom === this.clePrimaire) continue;
-
-      let valeurActuelle = ligne[col.nom];
-      let nouvelleValeur = prompt("Modifier " + col, String(valeurActuelle));
-
-      if (nouvelleValeur !== null && nouvelleValeur !== String(valeurActuelle)) {
-        maj[col.nom] = nouvelleValeur;
-      }
-    }
-
-    if (Object.keys(maj).length === 0) return;
-
-    this.changeService.mettreAJourDansTable(this.nomTable, String(id), maj).subscribe({
-      next: () => this.ngOnInit(),
-      error: () => this.messageErreur = "Erreur modification ligne"
-    });
+  modifierLigne(donne: TupleTable): void {
+    this.formulaireModification = true;
+    this.donneModifier = donne
   }
 
 
@@ -122,7 +106,13 @@ export class PageDetailTableComponent implements OnInit {
   }
 
   allerVersInsertion(): void {
-    this.router.navigate(['/insert', this.nomTable]);
+    this.formualireInsert = true;
+  }
+
+  removeFormualire(){
+    this.formulaireModification = false;
+    this.formualireInsert = false;
+    this.ngOnInit();
   }
   
 }

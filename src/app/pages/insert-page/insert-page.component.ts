@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TableService } from '../../services/tables.service';
 import { ChangeService } from '../../services/changes.service';
-import { TableAttribut } from '../../modeleTS/tabledetail';
+import { Insertions, TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
 
 @Component({
   selector: 'app-insert-page',
@@ -21,8 +21,11 @@ export class InsertPageComponent implements OnInit {
   message: string = '';
   valeursSelect: { [cle: string]: { id: string, label: string }[] } = {};
   clePrimaire: string = '';
+  update = false;
 
-
+  @Input() donnees: TupleTable = {};
+  @Output() annulerFormulaire = new EventEmitter<[]>();
+  
   constructor(
     private readonly route: ActivatedRoute,
     private readonly tableService: TableService,
@@ -32,6 +35,7 @@ export class InsertPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.update = Object.keys(this.donnees).length!=0
     const param = this.route.snapshot.paramMap.get('nomTable');
     if (param === null) {
       this.message = 'Nom de table non fourni';
@@ -59,8 +63,6 @@ export class InsertPageComponent implements OnInit {
             }
           });
           
-          
-        
         }
       },
       error: () => this.message = 'Erreur chargement des attributs'
@@ -70,9 +72,16 @@ export class InsertPageComponent implements OnInit {
 
   creerFormulaire(): void {
     const formGroup: { [cle: string]: FormControl<string> } = {};
-
-    for (let attribut of this.attributs) {
-      formGroup[attribut.nom] = new FormControl<string>('', { nonNullable: true, validators: [Validators.required] });
+    if(this.update){
+      for (let attribut of this.attributs) {
+        formGroup[attribut.nom] = new FormControl<string>(String(this.donnees[attribut.nom]), { nonNullable: true, validators: [Validators.required] });
+      }
+    }
+    else{
+      for (let attribut of this.attributs) {
+        formGroup[attribut.nom] = new FormControl<string>('', { nonNullable: true, validators: [Validators.required] });
+      }
+      
     }
 
     this.form = new FormGroup(formGroup);
@@ -82,22 +91,31 @@ export class InsertPageComponent implements OnInit {
     if (this.form.invalid) {
       this.message = "Formulaire invalide";
       return;
+    } 
+    if (this.update){
+      this.changeService.mettreAJourDansTable(this.nomTable, String(this.clePrimaire), this.form.value).subscribe({
+        next:()=>{
+          this.annulerFormulaire.emit(); 
+        }
+      });
     }
-  
-    this.changeService.insererDansTable(this.nomTable, this.form.value).subscribe({
-      next: () => {
-        this.message = "Donnée inséré avec succès";
-        this.creerFormulaire();
-        setTimeout(() => this.message = '', 2000);
-      },
-      error: (err) => {
-        this.message = err.error?.erreur;
-        setTimeout(() => this.message = '', 2000);
-        this.creerFormulaire();
-      }
-    });
+    else{
+      this.changeService.insererDansTable(this.nomTable, this.form.value).subscribe({
+        next: () => {
+          this.message = "Donnée inséré avec succès";
+          this.creerFormulaire();
+          setTimeout(() => this.message = '', 2000);
+          this.annulerFormulaire.emit();
+        },
+        error: (err) => {
+          this.message = err.error?.erreur;
+          setTimeout(() => this.message = '', 2000);
+          this.creerFormulaire();
+          this.annulerFormulaire.emit();
+        }
+      });
+    }
     
   }
-  
 
 }
