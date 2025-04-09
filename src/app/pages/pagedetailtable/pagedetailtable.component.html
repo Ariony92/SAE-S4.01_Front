@@ -12,6 +12,7 @@
         @for (attribut of attributs; track attribut) {
           <li id="elementAttribut">
             {{ attribut.nom.toUpperCase()}}
+            <button id="bouttonModifAttribut" (click)="modifierAttribut(attribut.nom)">Modifier</button>
           </li>
         }
       </ul>
@@ -50,11 +51,11 @@
           }
         </tbody>
       </table>
-      
+
       <section>
         <button id="buttonInsertion" (click)="formualireInsertion()">Insérer des données</button>
       </section>
-      
+
       <section id="pagination">
         <app-pagination
           [totalElements]="donnees.length"

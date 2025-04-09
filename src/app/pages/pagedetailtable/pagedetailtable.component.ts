@@ -81,7 +81,25 @@ export class PageDetailTableComponent implements OnInit {
     this.donneModifier = donne
   }
 
-  
+  modifierAttribut(nomActuel: string): void {
+    let nouveauNom = prompt("Nouveau nom pour l'attribut : ", nomActuel);
+
+    if (!nouveauNom || nouveauNom === nomActuel) return;
+
+    this.changeService.modifierAttribut(this.nomTable, nomActuel, nouveauNom).subscribe({
+      next: () => {
+        if (this.clePrimaire === nomActuel) {
+          this.clePrimaire = nouveauNom;
+        }
+        this.chargerColonnes();
+        this.ngOnInit();
+      },
+      error: () => this.messageErreur = "Erreur modification de l'attribut"
+    });
+  }
+
+
+
   setPage(page: number): void {
     this.pageActuelle = page;
     let debut = (page - 1) * this.elementsParPage;

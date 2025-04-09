@@ -18,7 +18,13 @@ export class ChangeService {
     return this.http.put(`${this.API_URL}/changes/${nomTable}/${id}`, donneeMAJ);
   }
 
+  modifierAttribut(nomTable: string, ancienNom: string, nouveauNom: string): Observable<any> {
+    return this.http.put(`${this.API_URL}/changes/${nomTable}/columns/${ancienNom}`, {
+      nv_attribut_nom: nouveauNom
+    });
+  }
+
   insererDansTable(nomTable: string, donnee: object): Observable<object> {
     return this.http.post(`${this.API_URL}/changes/${nomTable}`, donnee);
-  } 
+  }
 }
