@@ -111,7 +111,7 @@ export class FormulaireDonneeComponent implements OnInit {
   envoyer(): void {
     if (this.form.invalid) {
       this.message = "Formulaire invalide";
-      return;
+      
     }
     if (this.update){
       let idValeur = this.form.value[this.clePrimaire];

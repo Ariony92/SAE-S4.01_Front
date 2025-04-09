@@ -7,15 +7,20 @@
     <h2 id="titreTable">Table : {{ nomTable }}</h2>
 
     <section id="listeAttributs">
-      <h3 id="titreAttributs">Attributs :</h3>
+      
+      <h3 id="titreAttributs">Attributs : </h3>
+      <details>
+        <summary>Voir</summary>
+      
       <ul id="listeUlAttributs">
         @for (attribut of attributs; track attribut) {
           <li id="elementAttribut">
-            {{ attribut.nom.toUpperCase()}}
+            {{ attribut.nom.toUpperCase()}} - {{ attribut.types.toUpperCase()}} 
             <button id="bouttonModifAttribut" (click)="modifierAttribut(attribut.nom)">Modifier</button>
           </li>
         }
       </ul>
+      </details>
     </section>
 
     <section id="listeDonnees">
@@ -65,11 +70,14 @@
         </app-pagination>
       </section>
     </section>
-    @if (formualireInsert) {
-      <app-formulaire-donnee (annulerFormulaire)=removeFormualire()></app-formulaire-donnee>
-    }
-    @if (formulaireModification) {
-      <app-formulaire-donnee [donnees]=donneModifier (annulerFormulaire)=removeFormualire() ></app-formulaire-donnee>
-    }
+    
   </section>
+  @if (formualireInsert) {
+    <div id="overlay"></div>
+    <app-formulaire-donnee (annulerFormulaire)=removeFormualire() ></app-formulaire-donnee>
+  }
+  @if (formulaireModification) {
+    <div id="overlay"></div>
+    <app-formulaire-donnee [donnees]=donneModifier (annulerFormulaire)=removeFormualire() ></app-formulaire-donnee>
+  }
 }
