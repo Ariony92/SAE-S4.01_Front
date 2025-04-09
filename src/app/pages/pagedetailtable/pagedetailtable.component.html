@@ -66,10 +66,10 @@
       </section>
     </section>
     @if (formualireInsert) {
-      <app-insert-page (annulerFormulaire)=removeFormualire()></app-insert-page>
+      <app-formulaire-donnee (annulerFormulaire)=removeFormualire()></app-formulaire-donnee>
     }
     @if (formulaireModification) {
-      <app-insert-page [donnees]=donneModifier (annulerFormulaire)=removeFormualire() ></app-insert-page>
+      <app-formulaire-donnee [donnees]=donneModifier (annulerFormulaire)=removeFormualire() ></app-formulaire-donnee>
     }
   </section>
 }

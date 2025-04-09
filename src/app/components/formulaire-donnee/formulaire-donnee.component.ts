@@ -7,13 +7,13 @@ import { ChangeService } from '../../services/changes.service';
 import { Insertions, TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
 
 @Component({
-  selector: 'app-insert-page',
+  selector: 'app-formulaire-donnee',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './insert-page.component.html',
-  styleUrl: './insert-page.component.sass'
+  templateUrl: './formulaire-donnee.component.html',
+  styleUrl: './formulaire-donnee.component.sass'
 })
-export class InsertPageComponent implements OnInit {
+export class FormulaireDonneeComponent implements OnInit {
 
   nomTable: string = '';
   attributs: TableAttribut[] = [];

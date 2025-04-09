@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { PageDetailTableComponent } from './pages/pagedetailtable/pagedetailtable.component';
 import { Page404Component } from './pages/page404/page404.component';
-import { InsertPageComponent } from './pages/insert-page/insert-page.component';
+import { FormulaireDonneeComponent } from './pages/formulaire-donnee/formulaire-donnee.component';
 
 export const routes: Routes = [
   {
@@ -24,7 +24,7 @@ export const routes: Routes = [
   },
   {
     path: 'insert/:nomTable',
-    component: InsertPageComponent
+    component: FormulaireDonneeComponent
   },  
   {
     path: '**',

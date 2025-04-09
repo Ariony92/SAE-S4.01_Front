@@ -5,14 +5,14 @@ import { TableService } from '../../services/tables.service';
 import { FiltreComponent } from '../../components/filtre/filtre.component';
 import { TableAttribut, TupleTable } from '../../modeleTS/tabledetail';
 import {PaginationComponent} from '../../components/pagination/pagination.component';
-import { InsertPageComponent } from '../insert-page/insert-page.component';
 import { ChangeService } from '../../services/changes.service';
+import { FormulaireDonneeComponent } from '../../components/formulaire-donnee/formulaire-donnee.component';
 
 
 @Component({
   selector: 'app-pagedetailtable',
   standalone: true,
-  imports: [CommonModule, FiltreComponent, PaginationComponent, InsertPageComponent],
+  imports: [CommonModule, FiltreComponent, PaginationComponent, FormulaireDonneeComponent],
   templateUrl: './pagedetailtable.component.html',
   styleUrl: './pagedetailtable.component.sass'
 })
