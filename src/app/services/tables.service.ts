@@ -27,29 +27,29 @@ export class TableService {
     );
   }
   supprimerDansTable(nomTable: string, id: string): Observable<any> {
-    return this.http.delete(`${this.API_URL}/tables/${nomTable}/${id}`);
+    return this.http.delete(`${this.API_URL}/changes/${nomTable}/${id}`);
   }
 
-  mettreAJourDansTable(nomTable: string, id: string, donneeMAJ: any): Observable<any> {
-    return this.http.put(`${this.API_URL}/tables/${nomTable}/${id}`, donneeMAJ);
+  mettreAJourDansTable(nomTable: string, id: string, donneeMAJ: TupleTable): Observable<any> {
+    return this.http.put(`${this.API_URL}/changes/${nomTable}/${id}`, donneeMAJ);
   }
 
   supprimerAttribut(nomTable: string, attribut: string): Observable<any> {
-    return this.http.delete(`${this.API_URL}/tables/${nomTable}/columns/${attribut}`);
+    return this.http.delete(`${this.API_URL}/changes/${nomTable}/columns/${attribut}`);
   }
 
   modifierAttribut(nomTable: string, ancienNom: string, nouveauNom: string): Observable<any> {
-    return this.http.put(`${this.API_URL}/tables/${nomTable}/columns/${ancienNom}`, {
+    return this.http.put(`${this.API_URL}/changes/${nomTable}/columns/${ancienNom}`, {
       nv_attribut_nom: nouveauNom
     });
   }
 
-  recherche(nomTable: string, columns: string, recherche:string): Observable<Insertions> {
-    return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${recherche}`)
+  recherche(nomTable: string, columns: string, recherche: string): Observable<Insertions> {
+    return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${recherche}`);
   }
-  
-  rechercheDate(nomTable: string, columns: string, minDate: Date, maxDate: Date){
-    return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${minDate}/${maxDate}`)
+
+  rechercheDate(nomTable: string, columns: string, minDate: Date, maxDate: Date): Observable<Insertions> {
+    return this.http.get<Insertions>(`${this.API_URL}/tables/${nomTable}/${columns}/${minDate}/${maxDate}`);
   }
 
 }

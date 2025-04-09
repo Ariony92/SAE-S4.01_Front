@@ -60,19 +60,6 @@ export class PageDetailTableComponent implements OnInit {
     this.setPage(this.pageActuelle)
   }
 
-  supprimerColonne(nom: string): void {
-    if (!confirm('Voulez-vous vraiment supprimer la colonne "' + nom + '" ?')) return;
-
-    this.tableService.supprimerAttribut(this.nomTable, nom).subscribe({
-      next: () => {
-        this.chargerColonnes();
-      },
-      error: () => {
-        this.messageErreur = 'Erreur suppression colonne';
-      }
-    });
-  }
-
 
   supprimerLigne(ligne: TupleTable): void {
     if (!confirm("Supprimer ?")) return;
@@ -109,6 +96,24 @@ export class PageDetailTableComponent implements OnInit {
     });
   }
 
+  modifierAttribut(nomActuel: string): void {
+    let nouveauNom = prompt("Nouveau nom pour l'attribut : ", nomActuel);
+
+    if (!nouveauNom || nouveauNom === nomActuel) return;
+
+    this.tableService.modifierAttribut(this.nomTable, nomActuel, nouveauNom).subscribe({
+      next: () => {
+        if (this.clePrimaire === nomActuel) {
+          this.clePrimaire = nouveauNom;
+        }
+        this.chargerColonnes();
+        this.ngOnInit();
+      },
+      error: () => this.messageErreur = "Erreur modification de l'attribut"
+    });
+  }
+
+
 
   setPage(page: number): void {
     this.pageActuelle = page;
@@ -117,8 +122,16 @@ export class PageDetailTableComponent implements OnInit {
     this.pagination = this.donnees.slice(debut, fin);
   }
 
-  resetPage(){
-    window.location.reload();
+  resetPage(): void {
+    this.tableService.contenueTable(this.nomTable).subscribe({
+      next: (res) => {
+        this.donnees = res.data;
+        this.clePrimaire = res.primaryKey;
+        this.setPage(1);
+        this.chargerColonnes();
+      },
+      error: () => this.messageErreur = "Erreur lors du reset"
+    });
   }
 
 }
