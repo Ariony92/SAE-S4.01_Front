@@ -3,7 +3,7 @@ export interface TupleTable {
 }
 
 export interface Insertions {
-  entry: TupleTable[];
+  data: TupleTable[];
 }
 
 export interface nomColonne {
