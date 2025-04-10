@@ -27,4 +27,8 @@ export class ChangeService {
   insererDansTable(nomTable: string, donnee: object): Observable<object> {
     return this.http.post(`${this.API_URL}/changes/${nomTable}`, donnee);
   }
+
+  initialiserDepuisScript(sql: string) {
+    return this.http.post<{ message: string }>(`${this.API_URL}/tables/init_sql`, { sql });
+  }
 }

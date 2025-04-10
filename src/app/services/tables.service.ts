@@ -39,7 +39,4 @@ export class TableService {
     return this.http.get<{ id: string; label: string }[]>(`${this.API_URL}/tables/foreign_values/${colonne}`);
   }
 
-  initialiserDepuisScript(sql: string) {
-    return this.http.post<{ message: string }>(`${this.API_URL}/tables/init_sql`, { sql });
-  }
 }

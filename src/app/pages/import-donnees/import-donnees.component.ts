@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TableService } from '../../services/tables.service';
+import { ChangeService } from '../../services/changes.service';
 
 @Component({
   selector: 'app-import-donnees',
@@ -14,7 +14,7 @@ export class ImportDonneesComponent {
   script: string = '';
   message: string = '';
 
-  constructor(private readonly tableService: TableService) {}
+  constructor(private readonly changeService: ChangeService) {}
 
   envoyer(): void {
     const contenu = this.script.trim();
@@ -37,7 +37,7 @@ export class ImportDonneesComponent {
       return;
     }
 
-    this.tableService.initialiserDepuisScript(contenu).subscribe({
+    this.changeService.initialiserDepuisScript(contenu).subscribe({
       next: (resultat) => {
         this.message = resultat.message;
         this.script = '';
