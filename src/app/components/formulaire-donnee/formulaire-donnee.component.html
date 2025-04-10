@@ -1,5 +1,5 @@
 @if (update) {
-  <h2 id="titreInsertion">Mise à jour insertion table : {{ nomTable }}</h2>
+  <h2 id="titreMAJ">Mise à jour insertion table : {{ nomTable }}</h2>
 }
 @else {
   <h2 id="titreInsertion">Insertion dans la table : {{ nomTable }}</h2>
@@ -7,34 +7,34 @@
 
 @if (message !== '') {
   <p id="messageInsertion">{{ message }} </p>
-} 
+}
 @else {
 
   <form [formGroup]="form" (ngSubmit)="envoyer()" id="formulaireInsertion">
     @for (champ of attributs; track champ) {
       <div class="champFormulaire">
-        <label [for]="champ.nom" class="labelChamp">{{ champ.nom }}</label>
+        <label [for]="champ.nom" class="labelChamp">{{ champ.nom}}  -  {{champ.types}}</label>
 
         @if (champ.nom !== clePrimaire && valeursSelect[champ.nom]) {
           <select [id]="champ.nom" [formControlName]="champ.nom" class="champSelect">
             @for (valeur of valeursSelect[champ.nom]; track valeur) {
               <option [value]="valeur.id">{{ valeur.label }}</option>
             }
-          </select>              
-        } 
+          </select>
+        }
         @else {
-          <input 
+          <input
             [type]="champ.types.includes('timestamp') ? 'datetime-local' : champ.types.includes('date') ? 'date' : 'text'"
-            [id]="champ.nom" 
-            [formControlName]="champ.nom" 
+            [id]="champ.nom"
+            [formControlName]="champ.nom"
             class="champInput" />
         }
       </div>
     }
     <section class="buttonForm">
-      <button id="Annuler">Annuler</button>
+      <button id="Annuler" type="button" (click)="annulerFormulaire.emit()">Annuler</button>
       <button id="Valider" type="submit" [disabled]="form.invalid">Valider</button>
     </section>
-    
+
   </form>
 }

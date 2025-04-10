@@ -1,6 +1,17 @@
-<section id="cartes">
-  @for (titre of (titresTables | async); track titre) {
-    <app-cartes-titre-tables [titre]="titre"></app-cartes-titre-tables>
-  }
-</section>
+<section id="homepage">
 
+  <h1 class="titre-home">Bienvenue sur F1 Metrics</h1>
+  <p class="sous-titre-home">Explorez les différentes tables sur la base de données de Formule 1 </p>
+
+  <section id="schema-tables">
+    <h2 class="titre-schema">Sélection des tables :</h2>
+
+    <section id="cartes">
+      @for (titre of (titresTables | async); track titre) {
+        <app-cartes-titre-tables [titre]="titre"></app-cartes-titre-tables>
+      }
+    </section>
+
+  </section>
+
+</section>

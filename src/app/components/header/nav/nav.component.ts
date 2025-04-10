@@ -9,8 +9,8 @@ import {RouterLink} from "@angular/router";
   styleUrl: './nav.component.sass'
 })
 export class NavComponent {
-  nav: Array<string> = ["Accueil", "Importation"];
-  pagePrincipale: string = "Home";
+  nav: Array<string> = ["Accueil", "Import Script SQL", "Aide"];
+  pagePrincipale: string = "Accueil";
 
   setActiveTab(tab: string): void {
     this.pagePrincipale = tab;
@@ -32,8 +32,10 @@ export class NavComponent {
     switch (element) {
       case "Accueil":
         return "/home";
-      case "Importation":
+      case "Import Script SQL":
         return "/import";
+      case "Aide":
+        return "/contact-support";
       default:
         return "/home"
         //ajout d'autre route si besoin

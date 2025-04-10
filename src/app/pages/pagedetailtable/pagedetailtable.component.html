@@ -7,15 +7,15 @@
     <h2 id="titreTable">Table : {{ nomTable }}</h2>
 
     <section id="listeAttributs">
-      
+
       <h3 id="titreAttributs">Attributs : </h3>
       <details>
         <summary>Voir</summary>
-      
+
       <ul id="listeUlAttributs">
         @for (attribut of attributs; track attribut) {
           <li id="elementAttribut">
-            {{ attribut.nom.toUpperCase()}} - {{ attribut.types.toUpperCase()}} 
+            {{ attribut.nom.toUpperCase()}} - {{ attribut.types.toUpperCase()}}
             <button id="bouttonModifAttribut" (click)="modifierAttribut(attribut.nom)">Modifier</button>
           </li>
         }
@@ -26,8 +26,13 @@
     <section id="listeDonnees">
       <h3 id="titreDonnees">Données :
         <button id="button-reset" (click)="resetPage()">
-          <img width="10" height="10" src="https://img.icons8.com/?size=100&id=86242&format=png&color=000000" alt="reset"/>
+          <img width="10" height="10" src="https://img.icons8.com/?size=100&id=86242&format=png&color=000000" alt="reset" style="margin-right: 6px;"/>
+          Réinitialiser la recherche
         </button>
+
+        <div id="containerInsertion">
+          <button id="buttonInsertion" (click)="formualireInsertion()">Insérer des données</button>
+        </div>
       </h3>
 
       <table id="tableDonnees">
@@ -57,9 +62,7 @@
         </tbody>
       </table>
 
-      <section>
-        <button id="buttonInsertion" (click)="formualireInsertion()">Insérer des données</button>
-      </section>
+
 
       <section id="pagination">
         <app-pagination
@@ -70,7 +73,7 @@
         </app-pagination>
       </section>
     </section>
-    
+
   </section>
   @if (formualireInsert) {
     <div id="overlay"></div>

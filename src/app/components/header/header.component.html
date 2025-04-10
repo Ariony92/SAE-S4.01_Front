@@ -1,5 +1,6 @@
-<header>
-  <img id="LogoImage" src="../../assets/images/iconbleuLogo.png" alt="Logo F1 Metrics" />
+<header [class.menu-open]="menuOuvert">
+  <img id="LogoImage" src="../../../assets/images/iconbleuLogo.png" alt="Logo F1 Metrics" />
   <h3 id="texteLogo">F1 Metrics</h3>
+  <button class="menu-toggle" (click)="toggleMenu()">☰</button>
   <app-nav></app-nav>
 </header>

@@ -40,6 +40,6 @@ export class TableService {
   }
 
   initialiserDepuisScript(sql: string) {
-    return this.http.post<{ message: string }>(`${this.API_URL}/tables/init_sql`, { sql });
+    return this.http.post<{ message: string }>(`${this.API_URL}/changes/init_sql`, { sql });
   }
 }
