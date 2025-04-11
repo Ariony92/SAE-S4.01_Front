@@ -3,7 +3,7 @@
   margin: 2rem auto
   max-width: 900px
   padding: 0 1.5rem
-  
+
 
 #pagination
   display: flex
@@ -31,11 +31,32 @@ section
   margin-bottom: 2rem
 
 section h3
-  font-size: 1.4rem
+  display: flex
+  align-items: center
+  justify-content: space-between
   border-bottom: 2px solid #ccc
   padding-bottom: 0.5rem
   margin-bottom: 1rem
+  font-size: 1.4rem
   color: #444
+  width: 100%
+
+
+#titreDonnees
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 1rem
+  font-size: 1.4rem
+  color: #444
+  border-bottom: 2px solid #ccc
+  padding-bottom: 0.5rem
+  margin-bottom: 1rem
+
+#containerInsertion
+  margin-left: auto
+
+
 
 #bouttonModifAttribut
   padding: 0.4rem 0.8rem
@@ -73,6 +94,8 @@ section h3
   margin: 0 auto
   max-width: 100%
   overflow-x: auto
+
+
 
   #tableDonnees
     min-width: 900px
@@ -121,32 +144,31 @@ section h3
           transition: background-color 0.2s ease-in-out
 
         #buttonSuppr
-          background-color: #e53935
+          background-color: #de2520
           color: white
 
           &:hover
-            background-color: #c62828
+            background-color: #c51414
 
         #buttonModif
-          background-color: #1976d2
+          background-color: #0993c5
           color: white
 
           &:hover
-            background-color: #155a9e
+            background-color: #0d97c0
 
 
 #buttonInsertion
-  display: block
+  display: flex
   margin: auto
   padding: 10px
   background: purple
-  margin-top: 40px
   color: white
   border: none
   border-radius: 4px
   cursor: pointer
 
-app-formulaire-donnee 
+app-formulaire-donnee
   position: fixed
   top: 50%
   left: 50%
@@ -156,13 +178,35 @@ app-formulaire-donnee
   border-radius: 8px
   z-index: 1000
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
-  backdrop-filter: blur(8px) 
-#overlay 
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.3); /* Ombre semi-transparente */
-  backdrop-filter: blur(8px); /* Applique un flou sur tout ce qui est derrière */
-  z-index: 999; /* Doit être juste en dessous du formulaire */
+  backdrop-filter: blur(8px)
+#overlay
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background: rgba(0, 0, 0, 0.3)
+  backdrop-filter: blur(8px)
+  z-index: 999
+
+#button-reset
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  padding: 0.4rem 0.8rem
+  background-color: #f3650a
+  color: #000000
+  font-weight: 500
+  font-size: 0.9rem
+  border: none
+  border-radius: 4px
+  cursor: pointer
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out
+
+  img
+    width: 14px
+    height: 14px
+
+  &:hover
+    background-color: #ef6f05
+    box-shadow: 0 2px 6px rgb(0, 0, 0)

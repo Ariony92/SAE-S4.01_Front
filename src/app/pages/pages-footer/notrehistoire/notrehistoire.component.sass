@@ -1,0 +1,41 @@
+#notre-histoire
+  max-width: 800px
+  margin: 3rem auto
+  padding: 2rem
+  font-family: 'Mulish', sans-serif
+  background: linear-gradient(145deg, #1e1e2f, #2a2a40)
+  color: #f4f4f4
+  border-radius: 16px
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3)
+
+  h1
+    font-size: 2.5rem
+    text-align: center
+    margin-bottom: 2rem
+    color: #ffffff
+    position: relative
+
+    &::after
+      content: ''
+      display: block
+      width: 60px
+      height: 4px
+      background: #8a63d2
+      margin: 12px auto 0
+      border-radius: 2px
+
+  p
+    font-size: 1.1rem
+    line-height: 1.8
+    margin-bottom: 1.5rem
+    color: #dcdcdc
+
+    &:last-child
+      margin-bottom: 0
+
+  @media screen and (max-width: 768px)
+    padding: 1.5rem
+    h1
+      font-size: 2rem
+    p
+      font-size: 1rem

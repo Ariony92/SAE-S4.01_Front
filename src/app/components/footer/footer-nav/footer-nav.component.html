@@ -2,9 +2,15 @@
     @for (section of footerSections; track section.title) {
         <ul class="footer-section">
             <p class="footer-title">{{ section.title }}</p>
-            @for (lien of section.links; track lien.nom) {
-                <li><a [href]="lien.url" target="_blank">{{ lien.nom }}</a></li>
-            }
+          @for (lien of section.links; track lien.nom) {
+            <li>
+              @if (estLienInterne(lien.url)) {
+                <a [routerLink]="lien.url">{{ lien.nom }}</a>
+              } @else {
+                <a [href]="lien.url" target="_blank">{{ lien.nom }}</a>
+              }
+            </li>
+          }
         </ul>
     }
 </footer>

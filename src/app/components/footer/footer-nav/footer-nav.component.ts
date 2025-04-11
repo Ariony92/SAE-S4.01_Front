@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import {FooterSection} from '../../../modeleTS/footerSection';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-footer-nav',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './footer-nav.component.html',
   standalone: true,
   styleUrl: './footer-nav.component.sass'
@@ -30,9 +31,13 @@ export class FooterNavComponent {
       title: 'Aide',
       links: [
         { nom: 'Contact support', url: '/contact-support' },
-        { nom: 'Instructions', url: '/instructions' },
-        { nom: 'À propos de nous', url: '/a-propos' }
+        { nom: 'FAQ', url: '/instructions' },
+        { nom: 'À propos du site', url: '/a-propos' }
       ]
     }
   ];
+  estLienInterne(url: string): boolean {
+    return !url.startsWith('http');
+  }
+
 }

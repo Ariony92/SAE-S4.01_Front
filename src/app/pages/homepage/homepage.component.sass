@@ -1,6 +1,57 @@
+#homepage
+  padding: 2rem
+  font-family: Mulish, sans-serif
+  color: #031d44
+  text-align: center
+
+.titre-home
+  font-size: 2.2rem
+  font-weight: bold
+  margin-bottom: 0.5rem
+
+.sous-titre-home
+  font-size: 1.2rem
+  color: #444
+  margin-bottom: 2rem
+
+#schema-tables
+  margin-top: 2rem
+
+.titre-schema
+  font-size: 1.6rem
+  color: #285943
+  margin-bottom: 1rem
+
 #cartes
   display: grid
-  grid-template-columns: repeat(3, 1fr)
-  gap: 16px
-  margin: 2rem 0
+  grid-template-columns: repeat(5, 1fr) // 🔁 5 colonnes fixes
+  gap: 1.2rem
+  justify-items: center
+  padding: 2rem
 
+
+.carte-table
+  background-color: #f0f0f0
+  border: none
+  padding: 0.6rem 1rem
+  border-radius: 10px
+  cursor: pointer
+  font-weight: 500
+  color: #031d44
+  transition: all 0.2s ease-in-out
+  font-size: 0.95rem
+
+  &:hover
+    background-color: #d2e3f3
+    color: #031d44
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
+
+
+
+@media screen and (max-width: 768px)
+  #cartes
+    grid-template-columns: repeat(2, 1fr)
+
+@media screen and (max-width: 480px)
+  #cartes
+    grid-template-columns: 1fr

@@ -9,5 +9,9 @@ import {NavComponent} from './nav/nav.component';
   styleUrl: './header.component.sass'
 })
 export class HeaderComponent {
+  menuOuvert = false;
+  toggleMenu() {
+    this.menuOuvert = !this.menuOuvert;
+  }
 
 }

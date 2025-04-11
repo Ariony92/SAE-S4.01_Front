@@ -1,6 +1,6 @@
-<h2>Importer des données</h2>
+<h2>Importer des données :</h2>
 
-<p> Seul les insertions sont accéptées </p>
+<p>Seules les insertions au format script SQL sont acceptées</p>
 
 <form (ngSubmit)="envoyer()">
   <textarea
@@ -12,7 +12,8 @@
     required
   ></textarea>
   <br />
-  <button type="submit">Valider</button>
+  <button type="submit" title="Cliquez pour importer vos données SQL">Valider</button>
+
 </form>
 
 <p class="msg">{{ message }}</p>
